@@ -1,0 +1,108 @@
+---
+const route = Astro.locals.starlightRoute;
+const isChinese = route.lang === "zh-CN";
+const labels = isChinese
+  ? {
+      copy: "复制页面",
+      copied: "已复制",
+      failed: "复制失败",
+    }
+  : {
+      copy: "Copy page",
+      copied: "Copied",
+      failed: "Copy failed",
+    };
+---
+
+<div class="mint-page-heading">
+  <h1 id="_top">{route.entry.data.title}</h1>
+  <button
+    type="button"
+    class="mint-copy-page-button print:hidden"
+    data-copy-page
+    data-copy-label={labels.copy}
+    data-copied-label={labels.copied}
+    data-failed-label={labels.failed}
+    aria-label={labels.copy}
+  >
+    <svg class="copy-icon" aria-hidden="true" viewBox="0 0 24 24">
+      <rect x="9" y="9" width="12" height="12" rx="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+    <svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24">
+      <path d="m5 12 4 4L19 6"></path>
+    </svg>
+    <span data-copy-page-label aria-live="polite">{labels.copy}</span>
+  </button>
+</div>
+
+<script>
+  const COPY_RESET_DELAY = 1600;
+
+  function pageContentText() {
+    const title = document.querySelector("h1#_top")?.textContent?.trim() ?? "";
+    const content =
+      document.querySelector<HTMLElement>(".sl-markdown-content")?.innerText.trim() ?? "";
+    return [title, content].filter(Boolean).join("\n\n");
+  }
+
+  async function writePageText(text: string) {
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return;
+      } catch {
+        // Fall through to the selection-based clipboard fallback.
+      }
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.append(textarea);
+    textarea.select();
+    const legacyCopy = (
+      document as unknown as { execCommand: (commandId: string) => boolean }
+    ).execCommand.bind(document);
+    const copied = legacyCopy("copy");
+    textarea.remove();
+    if (!copied) throw new Error("Clipboard API is unavailable.");
+  }
+
+  function setCopyButtonState(button: HTMLButtonElement, state: "idle" | "copied" | "failed") {
+    const label = button.querySelector<HTMLElement>("[data-copy-page-label]");
+    const text =
+      state === "copied"
+        ? button.dataset.copiedLabel
+        : state === "failed"
+          ? button.dataset.failedLabel
+          : button.dataset.copyLabel;
+
+    button.dataset.copyState = state;
+    button.setAttribute("aria-label", text ?? "");
+    if (label) label.textContent = text ?? "";
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-copy-page]").forEach((button) => {
+    if (button.dataset.copyReady === "true") return;
+    button.dataset.copyReady = "true";
+    let resetTimer = 0;
+
+    button.addEventListener("click", async () => {
+      window.clearTimeout(resetTimer);
+      try {
+        await writePageText(pageContentText());
+        setCopyButtonState(button, "copied");
+      } catch {
+        setCopyButtonState(button, "failed");
+      }
+
+      resetTimer = window.setTimeout(
+        () => setCopyButtonState(button, "idle"),
+        COPY_RESET_DELAY,
+      );
+    });
+  });
+</script>

@@ -1,0 +1,46 @@
+import "./styles.css";
+
+import { useState } from "react";
+import { Send } from "lucide-react";
+import { aguiCommand, recordValue, stringValue, useAguiData } from "./common";
+import { mount } from "./mount";
+
+const COMMAND = "__NAMESPACE__.hello";
+
+function Composer() {
+  const data = useAguiData();
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+
+  async function run() {
+    setBusy(true);
+    setMessage("");
+    try {
+      const result = recordValue(await aguiCommand(COMMAND, [{ source: "composer", data }]));
+      setMessage(stringValue(result.message));
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="flex h-8 min-w-0 items-center gap-2 overflow-hidden rounded-[8px] border border-[color-mix(in_srgb,var(--agui-border)_70%,transparent)] bg-[color-mix(in_srgb,var(--agui-surface)_88%,transparent)] px-2">
+      <span className="min-w-0 flex-1 truncate text-[var(--agui-muted)]">
+        {message || "__DISPLAY_NAME__"}
+      </span>
+      <button
+        type="button"
+        className="inline-flex h-6 shrink-0 items-center gap-1.5 rounded-[6px] border border-[var(--agui-border)] bg-[color-mix(in_srgb,var(--agui-accent)_18%,transparent)] px-2 text-[var(--agui-fg)] disabled:opacity-55"
+        disabled={busy}
+        onClick={() => void run()}
+      >
+        <Send className="size-3.5" aria-hidden="true" />
+        Run
+      </button>
+    </div>
+  );
+}
+
+mount(<Composer />);

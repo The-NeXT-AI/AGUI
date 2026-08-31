@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@source "./**/*.{ts,tsx}";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-width: 0;
+}
+
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--agui-fg);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body[data-surface="github-composer-actions"] {
+  overflow: hidden;
+}
+
+body[data-surface="github-composer-actions"][data-visible="false"] {
+  display: none;
+}
+
+body[data-surface="github-item-renderer"] {
+  overflow: hidden;
+}
+
+html[data-surface="github-pr-diff"],
+body[data-surface="github-pr-diff"],
+body[data-surface="github-pr-diff"] #root {
+  height: 100%;
+}
+
+body[data-surface="github-pr-diff"] {
+  overflow: hidden;
+  background: color-mix(in srgb, var(--agui-canvas) 94%, transparent);
+}

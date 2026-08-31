@@ -1,0 +1,38 @@
+{
+  "name": "@agui/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-hosted AGUI web runtime and Agent Server Protocol client.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "packages/server"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "agui-server": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@agui/extensions": "workspace:*",
+    "@agui/runtime": "workspace:*",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "~5.7.0"
+  }
+}

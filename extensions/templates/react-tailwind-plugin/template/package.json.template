@@ -1,0 +1,138 @@
+{
+  "name": "__PLUGIN_NAME__",
+  "publisher": "__PUBLISHER__",
+  "version": "0.1.0",
+  "displayName": "__DISPLAY_NAME__",
+  "description": "__DESCRIPTION__",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.ui.json && node scripts/build-ui.js && tsc -p tsconfig.json && node scripts/finalize-build.js"
+  },
+  "files": [
+    "dist/**",
+    "mcp.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "agui": "^0.2.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:__NAMESPACE__.hello",
+    "onCommand:__NAMESPACE__.panelData",
+    "onCommand:__NAMESPACE__.sessionTree",
+    "onConfiguration:__NAMESPACE__.configuration",
+    "onComposer:__NAMESPACE__.composer",
+    "onView:__NAMESPACE__.panel.view",
+    "onChatRenderer:__NAMESPACE__.itemRenderer"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "permissions": [
+    "ui.sessionTree",
+    "ui.composer",
+    "ui.detailPanel",
+    "ui.chatRenderer",
+    "ui.webComponent.trusted",
+    "ui.webview",
+    "agent.mcp",
+    "agent.sessionContext",
+    "process.spawn",
+    "commands"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "__NAMESPACE__.hello",
+        "title": "Run __DISPLAY_NAME__ example",
+        "category": "__DISPLAY_NAME__",
+        "hidden": true
+      },
+      {
+        "id": "__NAMESPACE__.panelData",
+        "title": "Load __DISPLAY_NAME__ panel data",
+        "category": "__DISPLAY_NAME__",
+        "hidden": true
+      },
+      {
+        "id": "__NAMESPACE__.sessionTree",
+        "title": "Build __DISPLAY_NAME__ session tree",
+        "category": "__DISPLAY_NAME__",
+        "hidden": true
+      }
+    ],
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "__NAMESPACE__.panel",
+          "title": "__DISPLAY_NAME__",
+          "icon": "sparkles",
+          "order": 50
+        }
+      ]
+    },
+    "views": {
+      "__NAMESPACE__.panel": [
+        {
+          "id": "__NAMESPACE__.panel.view",
+          "name": "Panel",
+          "viewType": "webview",
+          "entry": "dist/panel.html"
+        }
+      ]
+    },
+    "composerControls": [
+      {
+        "id": "__NAMESPACE__.composer",
+        "title": "__DISPLAY_NAME__ composer",
+        "align": "left",
+        "viewType": "web-component",
+        "entry": "dist/composer.html",
+        "order": 0
+      }
+    ],
+    "chatRenderers": [
+      {
+        "id": "__NAMESPACE__.itemRenderer",
+        "renderer": "__NAMESPACE__.item",
+        "renderMode": "web-component",
+        "entry": "dist/item-renderer.html",
+        "priority": 100
+      }
+    ],
+    "configuration": {
+      "title": "__DISPLAY_NAME__ settings",
+      "view": {
+        "id": "__NAMESPACE__.configuration",
+        "name": "__DISPLAY_NAME__ configuration",
+        "viewType": "web-component",
+        "entry": "dist/configuration.html"
+      },
+      "properties": {
+        "__NAMESPACE__.enabled": {
+          "type": "boolean",
+          "title": "Enable sample sessions",
+          "default": true,
+          "restricted": true,
+          "description": "Show sample entries in the extension session tree."
+        }
+      }
+    },
+    "sessionTree": [
+      {
+        "id": "__NAMESPACE__.root",
+        "title": "__DISPLAY_NAME__",
+        "icon": "sparkles",
+        "order": 50,
+        "command": "__NAMESPACE__.sessionTree",
+        "children": []
+      }
+    ],
+    "mcpServers": "./mcp.json"
+  }
+}

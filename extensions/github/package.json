@@ -1,0 +1,324 @@
+{
+  "name": "github",
+  "publisher": "agui",
+  "version": "0.6.15",
+  "displayName": "GitHub",
+  "description": "Sign in to GitHub, choose repositories, and add issues and pull requests to the session tree.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "extensions/github"
+  },
+  "localizations": {
+    "zh": {
+      "displayName": "GitHub",
+      "description": "登录 GitHub、选择仓库，并在会话树中添加议题和拉取请求。",
+      "configuration": {
+        "title": "GitHub 同步设置",
+        "properties": {
+          "agui.github.account": {
+            "title": "GitHub 账号",
+            "description": "已登录 GitHub 账号的元数据，由登录流程自动维护。"
+          },
+          "agui.github.repositories": {
+            "title": "已选择仓库",
+            "description": "要显示在 GitHub 会话树中的仓库，由仓库选择器维护。"
+          },
+          "agui.github.syncIssues": {
+            "title": "同步议题",
+            "description": "在配置的仓库下显示议题入口。"
+          },
+          "agui.github.syncPullRequests": {
+            "title": "同步拉取请求",
+            "description": "在配置的仓库下显示拉取请求入口。"
+          },
+          "agui.github.issueState": {
+            "title": "议题状态",
+            "description": "同步议题时使用的状态筛选。",
+            "enumLabels": {
+              "open": "打开",
+              "all": "全部"
+            }
+          },
+          "agui.github.pullRequestState": {
+            "title": "拉取请求状态",
+            "description": "同步拉取请求时使用的状态筛选。",
+            "enumLabels": {
+              "open": "打开",
+              "all": "全部"
+            }
+          },
+          "AGUI_GITHUB_TOKEN": {
+            "title": "GitHub 访问令牌",
+            "description": "GitHub 登录流程保存的加密访问令牌。"
+          },
+          "AGUI_GITHUB_REFRESH_TOKEN": {
+            "title": "GitHub 刷新令牌",
+            "description": "GitHub 登录流程保存的加密刷新令牌，用于无感刷新登录。"
+          }
+        }
+      },
+      "contributions": {
+        "agui.github.root": {
+          "title": "GitHub"
+        },
+        "agui.github.issues": {
+          "title": "议题"
+        },
+        "agui.github.pullRequests": {
+          "title": "拉取请求"
+        },
+        "agui.github.composerActions": {
+          "title": "GitHub 快速操作"
+        },
+        "agui.github.prDiff": {
+          "title": "PR 修改"
+        },
+        "agui.github.prDiff.view": {
+          "name": "修改"
+        }
+      }
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.ui.json && node scripts/build-ui.js && tsc -p tsconfig.json && node scripts/finalize-build.js"
+  },
+  "files": [
+    "dist/**",
+    "mcp.json",
+    "LICENSE"
+  ],
+  "engines": {
+    "agui": "^0.2.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:agui.github.sessionTree",
+    "onCommand:agui.github.sessionTreeItems",
+    "onConfiguration:agui.github.configuration",
+    "onCommand:agui.github.authStatus",
+    "onCommand:agui.github.authStart",
+    "onCommand:agui.github.authComplete",
+    "onCommand:agui.github.repositories",
+    "onCommand:agui.github.quickAction",
+    "onCommand:agui.github.pullRequestDiff",
+    "onComposer:agui.github.composerActions",
+    "onView:agui.github.prDiff.view",
+    "onChatRenderer:agui.github.itemRenderer"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "permissions": [
+    "ui.sessionTree",
+    "ui.composer",
+    "ui.detailPanel",
+    "ui.chatRenderer",
+    "ui.webComponent.trusted",
+    "ui.webview",
+    "ui.styles",
+    "agent.mcp",
+    "agent.sessionContext",
+    "network",
+    "secrets",
+    "process.spawn",
+    "commands"
+  ],
+  "contributes": {
+    "chatRenderers": [
+      {
+        "id": "agui.github.itemRenderer",
+        "renderer": "agui.github.item",
+        "renderMode": "web-component",
+        "entry": "dist/item-renderer.html",
+        "priority": 200
+      }
+    ],
+    "commands": [
+      {
+        "id": "agui.github.sessionTree",
+        "title": "Build GitHub session tree",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.sessionTreeItems",
+        "title": "Load GitHub session tree items",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.authStatus",
+        "title": "GitHub authentication status",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.authStart",
+        "title": "Start GitHub sign-in",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.authComplete",
+        "title": "Complete GitHub sign-in",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.repositories",
+        "title": "List GitHub repositories",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.quickAction",
+        "title": "Run GitHub issue or pull request action",
+        "category": "GitHub",
+        "hidden": true
+      },
+      {
+        "id": "agui.github.pullRequestDiff",
+        "title": "Fetch GitHub pull request diff",
+        "category": "GitHub",
+        "hidden": true
+      }
+    ],
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "agui.github.prDiff",
+          "title": "GitHub PR diff",
+          "icon": "git-pull-request",
+          "order": 20
+        }
+      ]
+    },
+    "views": {
+      "agui.github.prDiff": [
+        {
+          "id": "agui.github.prDiff.view",
+          "name": "Changes",
+          "viewType": "webview",
+          "entry": "dist/pull-request-diff.html"
+        }
+      ]
+    },
+    "composerControls": [
+      {
+        "id": "agui.github.composerActions",
+        "title": "GitHub quick actions",
+        "align": "left",
+        "viewType": "web-component",
+        "entry": "dist/composer-actions.html",
+        "loadingIndicator": "hidden",
+        "order": -200
+      }
+    ],
+    "styles": [
+      {
+        "id": "agui.github.composerActionsPlacement",
+        "path": "dist/composer-actions.css",
+        "order": -200
+      }
+    ],
+    "configuration": {
+      "title": "GitHub sync settings",
+      "view": {
+        "id": "agui.github.configuration",
+        "name": "GitHub configuration",
+        "viewType": "web-component",
+        "entry": "dist/configuration.html"
+      },
+      "properties": {
+        "agui.github.account": {
+          "type": "object",
+          "title": "GitHub account",
+          "default": {},
+          "restricted": true,
+          "description": "Metadata for the signed-in GitHub account. Maintained by the sign-in flow."
+        },
+        "agui.github.repositories": {
+          "type": "array",
+          "title": "Selected repositories",
+          "default": [],
+          "restricted": true,
+          "description": "Repository full names to show in the GitHub session tree. Maintained by the repository picker."
+        },
+        "agui.github.syncIssues": {
+          "type": "boolean",
+          "title": "Sync issues",
+          "default": true,
+          "restricted": true,
+          "description": "Show issue entries under configured repositories."
+        },
+        "agui.github.syncPullRequests": {
+          "type": "boolean",
+          "title": "Sync pull requests",
+          "default": true,
+          "restricted": true,
+          "description": "Show pull request entries under configured repositories."
+        },
+        "agui.github.issueState": {
+          "type": "string",
+          "title": "Issue state",
+          "default": "open",
+          "restricted": true,
+          "enum": [
+            "open",
+            "all"
+          ],
+          "enumLabels": {
+            "open": "Open",
+            "all": "All"
+          },
+          "description": "Issue state filter used when syncing."
+        },
+        "agui.github.pullRequestState": {
+          "type": "string",
+          "title": "Pull request state",
+          "default": "open",
+          "restricted": true,
+          "enum": [
+            "open",
+            "all"
+          ],
+          "enumLabels": {
+            "open": "Open",
+            "all": "All"
+          },
+          "description": "Pull request state filter used when syncing."
+        },
+        "AGUI_GITHUB_TOKEN": {
+          "type": "string",
+          "title": "GitHub access token",
+          "secret": true,
+          "restricted": true,
+          "description": "Encrypted access token saved by the GitHub sign-in flow."
+        },
+        "AGUI_GITHUB_REFRESH_TOKEN": {
+          "type": "string",
+          "title": "GitHub refresh token",
+          "secret": true,
+          "restricted": true,
+          "description": "Encrypted refresh token saved by the GitHub sign-in flow for silent sign-in refresh."
+        }
+      }
+    },
+    "sessionTree": [
+      {
+        "id": "agui.github.root",
+        "title": "GitHub",
+        "icon": "github",
+        "order": 5,
+        "command": "agui.github.sessionTree",
+        "children": []
+      }
+    ],
+    "mcpServers": "./mcp.json"
+  }
+}

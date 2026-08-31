@@ -1,0 +1,132 @@
+#!/usr/bin/env node
+import { pathToFileURL } from "node:url";
+
+const tools = [
+  {
+    name: "__TOOL_PREFIX___echo",
+    title: "__DISPLAY_NAME__ echo",
+    description: "Echo a message through the template MCP server.",
+    inputSchema: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        message: {
+          type: "string",
+          description: "Message to echo.",
+        },
+      },
+      required: ["message"],
+    },
+  },
+];
+
+export { callTool, tools };
+
+async function callTool(name: string, args: Record<string, unknown> = {}) {
+  if (name !== "__TOOL_PREFIX___echo") throw new Error(`Unknown tool: ${name}`);
+  return {
+    message: typeof args.message === "string" ? args.message : "",
+    timestamp: new Date().toISOString(),
+  };
+}
+
+function startMcpServer() {
+  const transport = new StdioTransport(async (request) => {
+    if (request.method === "initialize") {
+      return {
+        protocolVersion: "2024-11-05",
+        capabilities: { tools: {} },
+        serverInfo: { name: "__PLUGIN_NAME__-mcp", version: "0.1.0" },
+      };
+    }
+    if (request.method === "tools/list") return { tools };
+    if (request.method === "tools/call") {
+      const params = recordValue(request.params);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              await callTool(String(params.name || ""), recordValue(params.arguments)),
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+    }
+    throw new Error(`Unsupported MCP method: ${request.method}`);
+  });
+  transport.start();
+}
+
+type JsonRpcRequest = {
+  id?: string | number;
+  method?: string;
+  params?: unknown;
+};
+
+type JsonRpcHandler = (request: JsonRpcRequest) => Promise<unknown> | unknown;
+
+class StdioTransport {
+  private buffer = Buffer.alloc(0);
+
+  constructor(private readonly handler: JsonRpcHandler) {}
+
+  start() {
+    process.stdin.on("data", (chunk) => this.onData(chunk));
+  }
+
+  private onData(chunk: Buffer) {
+    this.buffer = Buffer.concat([this.buffer, chunk]);
+    while (true) {
+      const headerEnd = this.buffer.indexOf("\r\n\r\n");
+      if (headerEnd < 0) return;
+      const header = this.buffer.subarray(0, headerEnd).toString("utf8");
+      const match = header.match(/content-length:\s*(\d+)/i);
+      if (!match?.[1]) {
+        this.buffer = Buffer.alloc(0);
+        return;
+      }
+      const bodyStart = headerEnd + 4;
+      const bodyEnd = bodyStart + Number(match[1]);
+      if (this.buffer.length < bodyEnd) return;
+      const body = this.buffer.subarray(bodyStart, bodyEnd).toString("utf8");
+      this.buffer = this.buffer.subarray(bodyEnd);
+      void this.respond(JSON.parse(body));
+    }
+  }
+
+  private async respond(request: JsonRpcRequest) {
+    try {
+      const result = await this.handler(request);
+      this.write({ jsonrpc: "2.0", id: request.id, result });
+    } catch (error) {
+      this.write({
+        jsonrpc: "2.0",
+        id: request.id,
+        error: {
+          code: -32000,
+          message: error instanceof Error ? error.message : String(error),
+        },
+      });
+    }
+  }
+
+  private write(message: unknown) {
+    const payload = JSON.stringify(message);
+    process.stdout.write(`Content-Length: ${Buffer.byteLength(payload, "utf8")}\r\n\r\n${payload}`);
+  }
+}
+
+function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
+function isMainModule() {
+  return Boolean(process.argv[1]) && import.meta.url === pathToFileURL(process.argv[1]).href;
+}
+
+if (isMainModule()) startMcpServer();

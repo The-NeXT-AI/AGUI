@@ -1,0 +1,86 @@
+import "./styles.css";
+
+import { useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
+import { aguiCommand, recordValue, stringValue, useAguiData } from "./common";
+import { mount } from "./mount";
+
+type PanelItem = {
+  description: string;
+  label: string;
+};
+
+function Panel() {
+  useAguiData();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [items, setItems] = useState<PanelItem[]>([]);
+  const [title, setTitle] = useState("__DISPLAY_NAME__ Panel");
+
+  async function load() {
+    setBusy(true);
+    setError("");
+    try {
+      const result = recordValue(await aguiCommand("__NAMESPACE__.panelData"));
+      setTitle(stringValue(result.title) || "__DISPLAY_NAME__ Panel");
+      setItems(
+        Array.isArray(result.items)
+          ? result.items.map((item) => {
+              const record = recordValue(item);
+              return {
+                description: stringValue(record.description),
+                label: stringValue(record.label),
+              };
+            })
+          : [],
+      );
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : String(cause));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  useEffect(() => {
+    void load();
+  }, []);
+
+  return (
+    <div className="flex h-full min-h-0 flex-col">
+      <header className="flex shrink-0 items-center gap-2 border-b border-[color-mix(in_srgb,var(--agui-border)_70%,transparent)] px-3 py-2.5">
+        <div className="min-w-0 flex-1">
+          <strong className="block truncate text-[13px] font-bold">{title}</strong>
+          <span className="mt-0.5 block truncate text-[11px] text-[var(--agui-muted)]">
+            React + Tailwind webview
+          </span>
+        </div>
+        <button
+          type="button"
+          className="inline-flex size-7 items-center justify-center rounded-[7px] border border-[var(--agui-border)] bg-[color-mix(in_srgb,var(--agui-surface)_86%,transparent)] text-[var(--agui-fg)] disabled:opacity-55"
+          disabled={busy}
+          onClick={() => void load()}
+          title="Refresh"
+        >
+          <RefreshCw className={`size-3.5 ${busy ? "animate-spin" : ""}`} aria-hidden="true" />
+        </button>
+      </header>
+
+      <main className="min-h-0 flex-1 overflow-auto p-3">
+        {error ? <div className="text-[#fca5a5]">{error}</div> : null}
+        <div className="grid gap-2">
+          {items.map((item) => (
+            <section
+              key={item.label}
+              className="rounded-lg border border-[color-mix(in_srgb,var(--agui-border)_70%,transparent)] bg-[color-mix(in_srgb,var(--agui-surface)_92%,transparent)] p-3"
+            >
+              <div className="font-semibold text-[var(--agui-fg)]">{item.label}</div>
+              <div className="mt-1 text-[var(--agui-muted)]">{item.description}</div>
+            </section>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+mount(<Panel />);

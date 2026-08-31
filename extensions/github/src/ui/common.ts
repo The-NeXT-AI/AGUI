@@ -1,0 +1,60 @@
+import { useEffect, useState } from "react";
+
+type AguiApi = {
+  data: unknown;
+  command(command: string, args?: unknown[]): Promise<unknown>;
+};
+
+declare global {
+  interface Window {
+    agui?: AguiApi;
+  }
+}
+
+export function useAguiData(): unknown {
+  const [data, setData] = useState<unknown>(() => window.agui?.data ?? null);
+
+  useEffect(() => {
+    const listener = (event: Event) => {
+      setData((event as CustomEvent<unknown>).detail ?? null);
+    };
+    window.addEventListener("agui:data", listener);
+    return () => window.removeEventListener("agui:data", listener);
+  }, []);
+
+  return data;
+}
+
+export function aguiCommand(command: string, args: unknown[] = []): Promise<unknown> {
+  if (!window.agui) return Promise.reject(new Error("AGUI bridge is not available."));
+  return window.agui.command(command, args);
+}
+
+export function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
+export function stringValue(value: unknown): string {
+  return typeof value === "string" ? value : value == null ? "" : String(value);
+}
+
+export function numberValue(value: unknown): number {
+  const result = Number(value || 0);
+  return Number.isFinite(result) ? result : 0;
+}
+
+export function safeHttpsUrl(value: unknown): string {
+  if (typeof value !== "string") return "";
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+export function githubLanguage(value: unknown): "en" | "zh" {
+  return stringValue(value) === "zh" ? "zh" : "en";
+}

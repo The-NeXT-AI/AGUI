@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf hook"
+          }
+        ]
+      }
+    ]
+  },
+  "allowedTools": ["Read", "Grep"],
+  "disallowedTools": ["WebFetch"]
+}

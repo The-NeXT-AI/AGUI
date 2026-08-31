@@ -1,0 +1,67 @@
+---
+import config from "virtual:starlight/user-config";
+
+import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
+import Search from "@astrojs/starlight/components/Search.astro";
+import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+
+const shouldRenderSearch =
+  config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
+
+const route = Astro.locals.starlightRoute;
+const isChinese = route.lang === "zh-CN";
+const localePrefix = isChinese ? "/zh-cn" : "";
+const currentPath = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+
+const navItems = isChinese
+  ? [
+      { label: "文档", href: "/zh-cn/" },
+      { label: "ASP", href: "/zh-cn/asp/" },
+      { label: "API 参考", href: "/zh-cn/reference/configuration/" },
+      { label: "更新日志", href: "/zh-cn/changelog/" },
+      { label: "学习", href: "/zh-cn/learn/" },
+    ]
+  : [
+      { label: "Documentation", href: "/" },
+      { label: "ASP", href: "/asp/" },
+      { label: "API reference", href: "/reference/configuration/" },
+      { label: "Changelog", href: "/changelog/" },
+      { label: "Learn", href: "/learn/" },
+    ];
+
+function isCurrent(href: string) {
+  const normalizedHref = href.endsWith("/") ? href : `${href}/`;
+  const localeRoot = `${localePrefix || ""}/`;
+
+  if (normalizedHref === localeRoot) return currentPath === normalizedHref;
+
+  return currentPath.startsWith(normalizedHref);
+}
+---
+
+<div class="header">
+  <div class="title-wrapper sl-flex">
+    <SiteTitle />
+    <nav class="mint-header-nav" aria-label={isChinese ? "主导航" : "Primary navigation"}>
+      {
+        navItems.map((item) => (
+          <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+  <div class="sl-flex print:hidden">
+    {shouldRenderSearch && <Search />}
+  </div>
+  <div class="sl-hidden md:sl-flex print:hidden right-group">
+    <div class="sl-flex social-icons">
+      <SocialIcons />
+    </div>
+    <ThemeSelect />
+    <LanguageSelect />
+  </div>
+</div>

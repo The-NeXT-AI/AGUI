@@ -1,0 +1,1422 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — modeled on the AGUI / ChatGPT desktop design language.
+ *
+ * The vocabulary (bg / surface / sidebar / fg layers, primary action, ANSI-16)
+ * mirrors the token system the real app exposes (--color-token-*). Swap the
+ * raw values below to re-skin the whole app; every component consumes tokens,
+ * never raw colors.
+ */
+
+@theme {
+  /* Background layers */
+  --color-canvas: var(--bg-canvas);
+  --color-surface: var(--bg-surface);
+  --color-surface-hover: var(--bg-surface-hover);
+  --color-surface-active: var(--bg-surface-active);
+  --color-elevated: var(--bg-elevated);
+  --color-sidebar: var(--bg-sidebar);
+  --color-input: var(--bg-input);
+
+  /* Foreground layers */
+  --color-fg: var(--fg-primary);
+  --color-muted: var(--fg-secondary);
+  --color-subtle: var(--fg-tertiary);
+
+  /* Borders */
+  --color-border: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+
+  /* Primary action + status */
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-muted: var(--accent-muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  /* Special surfaces */
+  --color-selection: var(--selection-bg);
+  --color-code-bg: var(--code-bg);
+
+  /* Radius scale */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
+
+  /* ANSI-16 for terminal output */
+  --color-ansi-black: var(--ansi-black);
+  --color-ansi-red: var(--ansi-red);
+  --color-ansi-green: var(--ansi-green);
+  --color-ansi-yellow: var(--ansi-yellow);
+  --color-ansi-blue: var(--ansi-blue);
+  --color-ansi-magenta: var(--ansi-magenta);
+  --color-ansi-cyan: var(--ansi-cyan);
+  --color-ansi-white: var(--ansi-white);
+  --color-ansi-bright-black: var(--ansi-bright-black);
+  --color-ansi-bright-red: var(--ansi-bright-red);
+  --color-ansi-bright-green: var(--ansi-bright-green);
+  --color-ansi-bright-yellow: var(--ansi-bright-yellow);
+  --color-ansi-bright-blue: var(--ansi-bright-blue);
+  --color-ansi-bright-magenta: var(--ansi-bright-magenta);
+  --color-ansi-bright-cyan: var(--ansi-bright-cyan);
+  --color-ansi-bright-white: var(--ansi-bright-white);
+
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+}
+
+/* ---------------------------------------------------------------------------
+ * Dark theme (default) — AGUI dark
+ * ------------------------------------------------------------------------- */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --titlebar-height: 48px;
+  --macos-window-controls-inset: 0px;
+  --sidebar-toggle-left: 8px;
+  --app-font-default-sans: "Söhne", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --app-font-default-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
+  --app-font-sans: var(--app-font-default-sans);
+  --app-font-mono: var(--app-font-default-mono);
+  --bg-canvas: #1c1d20; /* conversation area */
+  --bg-surface: #292b30; /* cards / message bubbles */
+  --bg-surface-hover: #33363c;
+  --bg-surface-active: #3d4149;
+  --bg-elevated: #25272c; /* composer / popovers */
+  --bg-sidebar: #141518; /* session sidebar (deeper) */
+  --bg-input: #292b30;
+
+  --fg-primary: #f2f2f0;
+  --fg-secondary: #b9babd;
+  --fg-tertiary: #8d9096;
+  --thinking-text: #9a9a96;
+  --thinking-highlight-edge: #deded8;
+  --thinking-highlight-core: #ffffff;
+
+  --border-default: #3f434b;
+  --border-subtle: #2b2e35;
+  --border-strong: #6d737d;
+
+  /* Primary action (send button etc.) — white on dark, like the real app */
+  --accent: #ececec;
+  --accent-fg: #171717;
+  --accent-muted: #d0d0d0;
+  --success: #77d05c;
+  --warning: #e8c068;
+  --danger: #ef4444;
+  --info: #a8c7fa;
+
+  --selection-bg: rgba(255, 255, 255, 0.16);
+  --code-bg: #1a1a1a;
+  --focus-ring: rgba(168, 199, 250, 0.72);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-composer: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 26px rgba(0, 0, 0, 0.22);
+  --shadow-elevated: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 16px 44px rgba(0, 0, 0, 0.32);
+  --shadow-popover: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 18px 56px rgba(0, 0, 0, 0.36);
+
+  /* AGUI chat typography — override these to rescale the whole conversation. */
+  --chat-font-size: 14px;
+  --chat-line-height: 22px;
+  --chat-code-font-size: 12px;
+  --thread-max-width: 48rem;
+  --inline-code-bg: color-mix(in srgb, var(--bg-surface-hover) 60%, var(--fg-primary) 6%);
+
+  --scrollbar: rgba(255, 255, 255, 0.18);
+  --scrollbar-hover: rgba(255, 255, 255, 0.3);
+  --scrollbar-active: rgba(255, 255, 255, 0.4);
+
+  --ansi-black: #000000;
+  --ansi-red: #ef4444;
+  --ansi-green: #77d05c;
+  --ansi-yellow: #f4f47b;
+  --ansi-blue: #8895ff;
+  --ansi-magenta: #db6bdb;
+  --ansi-cyan: #81eeee;
+  --ansi-white: #d6d6d6;
+  --ansi-bright-black: #6e6e6e;
+  --ansi-bright-red: #ff6b6b;
+  --ansi-bright-green: #94f494;
+  --ansi-bright-yellow: #ffffa8;
+  --ansi-bright-blue: #9e9eff;
+  --ansi-bright-magenta: #ffb3ff;
+  --ansi-bright-cyan: #a8ffff;
+  --ansi-bright-white: #ffffff;
+}
+
+/* ---------------------------------------------------------------------------
+ * Light theme
+ * ------------------------------------------------------------------------- */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg-canvas: #ffffff;
+  --bg-surface: #f5f6f8;
+  --bg-surface-hover: #eceef1;
+  --bg-surface-active: #e1e4e8;
+  --bg-elevated: #ffffff;
+  --bg-sidebar: #f7f8fa;
+  --bg-input: #ffffff;
+
+  --fg-primary: #0d0d0d;
+  --fg-secondary: #5d5d5d;
+  --fg-tertiary: #8e8e8e;
+  --thinking-text: #8a8a8a;
+  --thinking-highlight-edge: #424242;
+  --thinking-highlight-core: #0d0d0d;
+
+  --border-default: #d8dce2;
+  --border-subtle: #edf0f3;
+  --border-strong: #9aa1aa;
+
+  --accent: #0d0d0d;
+  --accent-fg: #ffffff;
+  --accent-muted: #2a2a2a;
+  --success: #1a7f37;
+  --warning: #9a6700;
+  --danger: #cf222e;
+  --info: #0969da;
+
+  --selection-bg: rgba(0, 0, 0, 0.12);
+  --code-bg: #f6f6f6;
+  --focus-ring: rgba(9, 105, 218, 0.55);
+  --shadow-card: 0 1px 2px rgba(13, 13, 13, 0.02), 0 6px 18px rgba(13, 13, 13, 0.04);
+  --shadow-composer: 0 1px 2px rgba(13, 13, 13, 0.022), 0 6px 20px rgba(13, 13, 13, 0.045);
+  --shadow-elevated: 0 1px 2px rgba(13, 13, 13, 0.04), 0 18px 48px rgba(13, 13, 13, 0.12);
+  --shadow-popover: 0 1px 2px rgba(13, 13, 13, 0.06), 0 18px 56px rgba(13, 13, 13, 0.16);
+
+  --scrollbar: rgba(0, 0, 0, 0.18);
+  --scrollbar-hover: rgba(0, 0, 0, 0.3);
+  --scrollbar-active: rgba(0, 0, 0, 0.4);
+
+  --ansi-black: #000000;
+  --ansi-red: #cf222e;
+  --ansi-green: #1a7f37;
+  --ansi-yellow: #9a6700;
+  --ansi-blue: #0969da;
+  --ansi-magenta: #8250df;
+  --ansi-cyan: #1b7c83;
+  --ansi-white: #d6d6d6;
+  --ansi-bright-black: #6e6e6e;
+  --ansi-bright-red: #a40e26;
+  --ansi-bright-green: #2da44e;
+  --ansi-bright-yellow: #bf8700;
+  --ansi-bright-blue: #218bff;
+  --ansi-bright-magenta: #a475f4;
+  --ansi-bright-cyan: #3192aa;
+  --ansi-bright-white: #ffffff;
+}
+
+/*
+ * Keep native-window metrics outside cascade layers. Theme tokens above are
+ * also unlayered, so a layered override would lose even with higher selector
+ * specificity and leave the macOS inset at zero.
+ */
+html[data-desktop="electron"][data-platform="darwin"] {
+  --titlebar-height: 52px;
+  --macos-window-controls-inset: 96px;
+  --sidebar-toggle-left: 96px;
+  --app-font-default-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Söhne", ui-sans-serif,
+    system-ui, "Segoe UI", sans-serif;
+}
+
+html[data-desktop="electron"][data-platform="darwin"][data-window-fullscreen="true"] {
+  --macos-window-controls-inset: 8px;
+  --sidebar-toggle-left: 8px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --titlebar-height: 56px;
+    --chat-font-size: 15px;
+    --chat-line-height: 24px;
+    --thread-max-width: 100%;
+  }
+
+  html[data-desktop="electron"][data-platform="darwin"] {
+    --titlebar-height: 56px;
+    --macos-window-controls-inset: 0px;
+    --sidebar-toggle-left: max(8px, env(safe-area-inset-left));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------------- */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
+
+  html[data-desktop="electron"] body,
+  html[data-desktop="electron"] #root {
+    -webkit-app-region: no-drag;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-fg);
+    font-family: var(--app-font-sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .electron-drag-region {
+    -webkit-app-region: drag;
+  }
+
+  button,
+  input,
+  textarea,
+  select,
+  a,
+  [role="button"] {
+    -webkit-app-region: no-drag;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+
+  :where(button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-hover);
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--scrollbar-active);
+  }
+}
+
+@layer components {
+  .ui-icon-button {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--color-muted);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      opacity 150ms ease;
+  }
+
+  .ui-icon-button:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-fg);
+  }
+
+  .ui-icon-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  .ui-icon-button[aria-current="page"],
+  .ui-icon-button[data-active="true"],
+  .ui-icon-button[data-state="open"] {
+    background: var(--color-surface);
+    color: var(--color-fg);
+  }
+
+  .ui-nav-row {
+    display: flex;
+    min-height: 2rem;
+    min-width: 0;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    padding: 0.375rem 0.5rem;
+    color: var(--color-muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      opacity 150ms ease;
+  }
+
+  .ui-nav-row:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-fg);
+  }
+
+  .ui-nav-row[aria-current="page"],
+  .ui-nav-row[data-active="true"] {
+    background: color-mix(in srgb, var(--bg-surface) 88%, var(--fg-primary) 3%);
+    color: var(--color-fg);
+  }
+
+  .ui-button {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border: 1px solid color-mix(in srgb, var(--border-default) 86%, transparent);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-muted);
+    padding: 0.375rem 0.75rem;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      opacity 150ms ease;
+  }
+
+  .ui-button:hover {
+    border-color: color-mix(in srgb, var(--border-strong) 72%, transparent);
+    background: var(--color-surface-hover);
+    color: var(--color-fg);
+  }
+
+  .ui-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  .ui-button-primary {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  .ui-button-primary:hover {
+    border-color: var(--color-accent-muted);
+    background: var(--color-accent-muted);
+    color: var(--color-accent-fg);
+  }
+
+  .ui-button-danger {
+    border-color: color-mix(in srgb, var(--danger) 46%, transparent);
+    color: var(--color-danger);
+  }
+
+  .ui-button-danger:hover {
+    border-color: color-mix(in srgb, var(--danger) 58%, transparent);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+    color: var(--color-danger);
+  }
+
+  .ui-button-danger-primary {
+    border-color: var(--color-danger);
+    background: var(--color-danger);
+    color: #ffffff;
+  }
+
+  .ui-button-danger-primary:hover {
+    border-color: color-mix(in srgb, var(--danger) 92%, #ffffff 8%);
+    background: color-mix(in srgb, var(--danger) 92%, #ffffff 8%);
+    color: #ffffff;
+  }
+
+  .ui-field {
+    width: 100%;
+    border: 1px solid color-mix(in srgb, var(--border-default) 84%, transparent);
+    border-radius: 8px;
+    background: var(--color-input);
+    color: var(--color-fg);
+    padding: 0.5rem 0.75rem;
+    font-size: 13px;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .ui-field:hover {
+    border-color: color-mix(in srgb, var(--border-strong) 58%, transparent);
+  }
+
+  .ui-field:focus {
+    border-color: color-mix(in srgb, var(--border-strong) 78%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--border-strong) 58%, transparent);
+    outline: none;
+  }
+
+  .ui-field::placeholder {
+    color: var(--color-subtle);
+  }
+
+  .ui-badge {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid color-mix(in srgb, var(--border-default) 70%, transparent);
+    border-radius: 999px;
+    color: var(--color-subtle);
+    padding: 0.125rem 0.375rem;
+    font-size: 10.5px;
+    line-height: 1;
+  }
+
+  .ui-switch {
+    position: relative;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface-hover);
+    padding: 2px;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      opacity 150ms ease;
+  }
+
+  .ui-switch:hover {
+    border-color: color-mix(in srgb, var(--border-strong) 62%, transparent);
+  }
+
+  .ui-switch[data-checked="true"] {
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+    background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+
+  .ui-switch:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  .ui-switch-thumb {
+    display: flex;
+    width: 1.125rem;
+    height: 1.125rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--color-fg);
+    color: var(--color-canvas);
+    transition: transform 150ms ease;
+  }
+
+  .ui-switch[data-checked="true"] .ui-switch-thumb {
+    transform: translateX(1.25rem);
+  }
+
+  .ui-soft-card {
+    border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+      var(--color-elevated);
+    box-shadow: var(--shadow-card);
+  }
+
+  .ui-soft-card-interactive:hover {
+    border-color: color-mix(in srgb, var(--border-strong) 66%, transparent);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0)),
+      var(--color-surface-hover);
+  }
+
+  .ui-popover-surface {
+    border: 1px solid color-mix(in srgb, var(--border-default) 84%, transparent);
+    background: color-mix(in srgb, var(--bg-elevated) 96%, var(--fg-primary) 4%);
+    box-shadow: var(--shadow-popover);
+  }
+
+  .composer-suggestion-menu {
+    border-color: color-mix(in srgb, var(--border-default) 78%, transparent);
+    background: color-mix(in srgb, var(--bg-elevated) 96%, var(--fg-primary) 4%);
+  }
+
+  .composer-suggestion-item {
+    color: var(--color-muted);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .composer-suggestion-icon {
+    display: inline-flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--fg-primary) 5%, transparent);
+    color: var(--color-subtle);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .composer-suggestion-item:hover,
+  .composer-suggestion-item[data-active="true"] {
+    background: var(--color-surface-active);
+    color: var(--color-fg);
+  }
+
+  .composer-suggestion-item:hover .composer-suggestion-icon,
+  .composer-suggestion-item[data-active="true"] .composer-suggestion-icon {
+    background: color-mix(in srgb, var(--fg-primary) 8%, transparent);
+    color: var(--color-fg);
+  }
+
+  .composer-suggestion-meta {
+    color: var(--color-subtle);
+    transition: color 150ms ease;
+  }
+
+  .composer-suggestion-item:hover .composer-suggestion-meta,
+  .composer-suggestion-item[data-active="true"] .composer-suggestion-meta {
+    color: var(--color-muted);
+  }
+
+  :root[data-workspace-theme-color="custom"] .composer-suggestion-menu {
+    border-color: color-mix(in srgb, var(--accent) 34%, var(--border-default));
+    background: color-mix(in srgb, var(--accent) 9%, var(--bg-elevated));
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--accent) 15%, transparent) inset,
+      var(--shadow-popover);
+  }
+
+  :root[data-workspace-theme-color="custom"] .composer-suggestion-item {
+    color: color-mix(in srgb, var(--accent) 46%, var(--fg-secondary));
+  }
+
+  :root[data-workspace-theme-color="custom"] .composer-suggestion-icon {
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+    color: color-mix(in srgb, var(--accent) 68%, var(--fg-tertiary));
+  }
+
+  :root[data-workspace-theme-color="custom"] .composer-suggestion-item:hover,
+  :root[data-workspace-theme-color="custom"] .composer-suggestion-item[data-active="true"] {
+    background: color-mix(in srgb, var(--accent) 18%, var(--bg-surface-hover));
+    color: color-mix(in srgb, var(--accent) 76%, var(--fg-primary));
+  }
+
+  :root[data-workspace-theme-color="custom"]
+    .composer-suggestion-item:hover
+    .composer-suggestion-icon,
+  :root[data-workspace-theme-color="custom"]
+    .composer-suggestion-item[data-active="true"]
+    .composer-suggestion-icon {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    color: color-mix(in srgb, var(--accent) 82%, var(--fg-primary));
+  }
+
+  :root[data-workspace-theme-color="custom"] .composer-suggestion-meta {
+    color: color-mix(in srgb, var(--accent) 56%, var(--fg-tertiary));
+  }
+
+  :root[data-workspace-theme-color="custom"]
+    .composer-suggestion-item:hover
+    .composer-suggestion-meta,
+  :root[data-workspace-theme-color="custom"]
+    .composer-suggestion-item[data-active="true"]
+    .composer-suggestion-meta {
+    color: color-mix(in srgb, var(--accent) 68%, var(--fg-secondary));
+  }
+
+  .ui-composer-surface {
+    border: 1px solid color-mix(in srgb, var(--border-subtle) 68%, transparent);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0)),
+      var(--color-elevated);
+    box-shadow: var(--shadow-composer);
+  }
+
+  .ui-composer-surface:focus-within {
+    border-color: color-mix(in srgb, var(--border-strong) 58%, transparent);
+  }
+
+  .composer-voice-recorder {
+    border: 1px solid color-mix(in srgb, var(--info) 34%, var(--border-default));
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--info) 11%, transparent), transparent),
+      color-mix(in srgb, var(--bg-surface) 82%, var(--info) 5%);
+  }
+
+  .composer-voice-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--color-info);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--info) 34%, transparent);
+    animation: codex-voice-pulse 1.15s ease-out infinite;
+  }
+
+  .composer-voice-button-active {
+    background: var(--color-info);
+    color: var(--color-canvas);
+  }
+
+  .composer-voice-button-active:hover {
+    background: color-mix(in srgb, var(--info) 88%, var(--fg-primary) 12%);
+    color: var(--color-canvas);
+  }
+
+  .composer-voice-waveform {
+    height: 1.75rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .composer-voice-waveform-track {
+    display: flex;
+    height: 100%;
+    min-width: max-content;
+    align-items: center;
+    gap: 3px;
+    animation: codex-voice-wave-scroll 680ms linear infinite;
+  }
+
+  .composer-voice-waveform-track span {
+    display: block;
+    width: 2px;
+    height: 1.45rem;
+    flex: 0 0 2px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--info) 78%, var(--fg-primary) 16%);
+    opacity: 0.78;
+    transform: scaleY(var(--voice-level));
+    transform-origin: center;
+    transition:
+      opacity 90ms linear,
+      transform 90ms linear;
+  }
+
+  .composer-voice-waveform-track span:nth-child(3n) {
+    opacity: 0.58;
+  }
+
+  .composer-voice-waveform-track span:nth-child(4n) {
+    background: color-mix(in srgb, var(--info) 62%, var(--fg-primary) 22%);
+  }
+
+  .composer-editor-host {
+    position: relative;
+    z-index: 20;
+    display: block;
+    width: 100%;
+    min-height: 4rem;
+    max-height: 14rem;
+    overflow-y: auto;
+  }
+
+  .composer-editor {
+    min-height: 4rem;
+    padding: 0.875rem 1rem 0.25rem;
+    color: var(--color-fg);
+    caret-color: var(--color-fg);
+    font-size: 15px;
+    line-height: 1.625;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    outline: none;
+  }
+
+  .composer-editor p {
+    min-height: 1.625em;
+    margin: 0;
+  }
+
+  .composer-editor .composer-tag {
+    display: inline-flex;
+    max-width: min(100%, 22rem);
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0 0.08em;
+    border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--border-default));
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--accent) 13%, var(--bg-surface-hover));
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--accent) 16%, transparent) inset,
+      0 1px 2px color-mix(in srgb, var(--bg-canvas) 18%, transparent);
+    color: color-mix(in srgb, var(--accent) 64%, var(--fg-primary));
+    padding: 0.08rem 0.42rem 0.1rem 0.32rem;
+    font-size: 0.92em;
+    font-weight: 560;
+    line-height: 1.35;
+    vertical-align: 0.02em;
+    user-select: all;
+  }
+
+  .composer-editor .composer-tag[data-composer-tag-kind="command"] {
+    background: color-mix(in srgb, var(--accent) 17%, var(--bg-surface-hover));
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    letter-spacing: -0.01em;
+  }
+
+  .composer-editor .composer-tag-icon {
+    display: inline-flex;
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--accent) 17%, transparent);
+    color: color-mix(in srgb, var(--accent) 78%, var(--fg-primary));
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .composer-editor .composer-tag-icon svg {
+    width: 0.68rem;
+    height: 0.68rem;
+  }
+
+  .composer-editor .composer-tag-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .composer-editor .composer-tag.ProseMirror-selectednode {
+    border-color: var(--accent);
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--accent) 26%, transparent),
+      0 1px 0 color-mix(in srgb, var(--accent) 18%, transparent) inset;
+  }
+
+  :root:not([data-workspace-theme-color="custom"]) .composer-editor .composer-tag {
+    gap: 0.32rem;
+    margin: 0 0.04em;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: inherit;
+    padding: 0;
+    font-size: 1em;
+    font-weight: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+  }
+
+  :root:not([data-workspace-theme-color="custom"])
+    .composer-editor
+    .composer-tag[data-composer-tag-kind="command"] {
+    background: transparent;
+  }
+
+  :root:not([data-workspace-theme-color="custom"]) .composer-editor .composer-tag-icon {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0;
+    background: transparent;
+    color: color-mix(in srgb, var(--accent) 74%, var(--fg-primary));
+  }
+
+  :root:not([data-workspace-theme-color="custom"]) .composer-editor .composer-tag-icon svg {
+    width: 0.92rem;
+    height: 0.92rem;
+  }
+
+  :root:not([data-workspace-theme-color="custom"])
+    .composer-editor
+    .composer-tag.ProseMirror-selectednode {
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}
+
+@media (max-width: 640px) {
+  .composer-editor-host,
+  .composer-editor {
+    min-height: 3.5rem;
+  }
+
+  .composer-editor {
+    font-size: 16px;
+  }
+}
+
+@layer utilities {
+  .titlebar-toggle-button,
+  .titlebar-toggle-button * {
+    pointer-events: auto;
+    -webkit-app-region: no-drag !important;
+  }
+
+  .titlebar-toggle-button svg {
+    pointer-events: none;
+  }
+
+  .app-titlebar-right-drawer-inset {
+    padding-right: calc(56px + env(safe-area-inset-right));
+  }
+
+  .side-panel-plugin-interactive,
+  .side-panel-plugin-interactive * {
+    pointer-events: auto;
+    -webkit-app-region: no-drag !important;
+  }
+
+  .side-panel-plugin-interactive svg,
+  .side-panel-plugin-interactive svg * {
+    pointer-events: none;
+  }
+
+  .shell-toggle-hitbox {
+    position: fixed;
+    z-index: 50;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    -webkit-app-region: no-drag !important;
+  }
+
+  .shell-sidebar-toggle-hitbox {
+    left: calc(var(--sidebar-toggle-left) - 4px);
+    top: calc((var(--titlebar-height) - 40px) / 2);
+  }
+
+  .shell-sidebar-search-hitbox {
+    left: calc(var(--sidebar-toggle-left) + 32px);
+    top: calc((var(--titlebar-height) - 40px) / 2);
+  }
+
+  .shell-detail-panel-toggle-hitbox {
+    right: 4px;
+    top: calc((var(--titlebar-height) - 40px) / 2);
+  }
+
+  .native-titlebar-click-slot {
+    position: absolute;
+    top: calc((var(--titlebar-height) - 40px) / 2);
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    pointer-events: auto;
+    -webkit-app-region: no-drag !important;
+  }
+
+  .shell-sidebar-native-click-slot {
+    left: calc(var(--sidebar-toggle-left) - 4px);
+  }
+
+  .shell-sidebar-search-native-click-slot {
+    left: calc(var(--sidebar-toggle-left) + 32px);
+  }
+
+  .shell-detail-panel-native-click-slot {
+    right: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .shell-toggle-hitbox {
+      width: 44px;
+      height: 44px;
+    }
+
+    .shell-sidebar-toggle-hitbox {
+      left: max(8px, env(safe-area-inset-left));
+      top: calc((var(--titlebar-height) - 44px) / 2);
+    }
+
+    .shell-sidebar-search-hitbox {
+      left: calc(max(8px, env(safe-area-inset-left)) + 44px);
+      top: calc((var(--titlebar-height) - 44px) / 2);
+    }
+
+    .shell-detail-panel-toggle-hitbox {
+      right: max(4px, env(safe-area-inset-right));
+      top: calc((var(--titlebar-height) - 44px) / 2);
+    }
+
+    .is-mobile-shell[data-active-mobile-overlay="detail"] .shell-sidebar-toggle-hitbox,
+    .is-mobile-shell[data-active-mobile-overlay="detail"] .shell-sidebar-search-hitbox,
+    .is-mobile-shell[data-active-mobile-overlay="sidebar"] .shell-detail-panel-toggle-hitbox {
+      display: none;
+    }
+
+    .mobile-composer {
+      padding-right: max(12px, env(safe-area-inset-right));
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      padding-left: max(12px, env(safe-area-inset-left));
+    }
+
+    .mobile-shell-scroll {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scroll-padding-top: var(--titlebar-height);
+    }
+  }
+
+  ::view-transition-group(sidebar-trigger),
+  ::view-transition-group(detail-panel-trigger) {
+    animation-duration: 180ms;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(sidebar-trigger),
+    ::view-transition-group(detail-panel-trigger) {
+      animation-duration: 1ms;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 1ms;
+    }
+  }
+
+  html[data-desktop="electron"][data-platform="darwin"] .macos-window-controls-inset {
+    padding-left: var(--macos-window-controls-inset);
+  }
+
+  html[data-desktop="electron"][data-platform="darwin"] .app-titlebar {
+    background: color-mix(in srgb, var(--bg-canvas) 90%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(1.2);
+    backdrop-filter: blur(22px) saturate(1.2);
+    user-select: none;
+  }
+
+  html[data-desktop="electron"][data-platform="darwin"] .sidebar-app-titlebar {
+    background: color-mix(in srgb, var(--bg-sidebar) 90%, transparent);
+  }
+
+  html[data-desktop="electron"][data-platform="darwin"] .sidebar-primary-actions {
+    padding-top: 7px;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Compact Electron window: translucent chrome over native macOS/Windows materials. */
+html[data-window-mode="compact"] {
+  --titlebar-height: 46px;
+  --thread-max-width: 100%;
+  background: transparent;
+}
+
+html[data-window-mode="compact"] body,
+html[data-window-mode="compact"] #root {
+  background: transparent;
+}
+
+html[data-window-mode="compact"] .compact-window-shell {
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-window-mode="compact"]:not([data-platform="darwin"]):not([data-platform="win32"])
+  .compact-window-shell {
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--bg-surface) 18%, transparent),
+      transparent 42%
+    ),
+    color-mix(in srgb, var(--bg-canvas) 42%, transparent);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  backdrop-filter: blur(40px) saturate(1.6);
+}
+
+html[data-window-mode="compact"] .compact-window-titlebar {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-window-mode="compact"] .compact-window-titlebar[data-pinned="true"] {
+  border-bottom-color: color-mix(in srgb, var(--accent) 22%, var(--border-subtle));
+}
+
+html[data-window-mode="compact"] .compact-window-titlebar [aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--color-fg);
+}
+
+html[data-window-mode="compact"] .compact-window-close:hover {
+  background: color-mix(in srgb, var(--danger) 72%, transparent);
+  color: #ffffff;
+}
+
+html[data-window-mode="compact"] .mobile-composer {
+  background: transparent;
+  padding-right: 10px;
+  padding-bottom: 11px;
+  padding-left: 10px;
+}
+
+html[data-window-mode="compact"] .ui-composer-surface {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 4%), transparent),
+    color-mix(in srgb, var(--bg-elevated) 46%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* highlight.js minimal theme bound to tokens */
+.hljs {
+  color: var(--color-fg);
+  background: transparent;
+}
+.hljs-comment,
+.hljs-quote {
+  color: var(--color-subtle);
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+  color: var(--color-info);
+}
+.hljs-string,
+.hljs-attr,
+.hljs-addition {
+  color: var(--color-success);
+}
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable {
+  color: var(--color-warning);
+}
+.hljs-title,
+.hljs-section {
+  color: var(--ansi-cyan);
+}
+.hljs-type {
+  color: var(--ansi-cyan);
+}
+.hljs-deletion {
+  color: var(--color-danger);
+}
+
+/* ---------------------------------------------------------------------------
+ * AGUI motion — fade-in for arriving blocks, working-dots for "thinking",
+ * shimmer for loading surfaces.
+ * ------------------------------------------------------------------------- */
+@keyframes codex-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes codex-question-card-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(34px) scaleX(0.94) scaleY(0.78);
+    filter: blur(1.5px);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(-5px) scaleX(1.012) scaleY(1.018);
+    filter: blur(0);
+  }
+  82% {
+    transform: translateY(1.5px) scaleX(0.996) scaleY(0.994);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes codex-question-card-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  36% {
+    opacity: 1;
+    transform: translateY(-3px) scaleX(1.006) scaleY(1.012);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(28px) scaleX(0.95) scaleY(0.8);
+    filter: blur(1px);
+  }
+}
+
+@keyframes codex-voice-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--info) 36%, transparent);
+    opacity: 1;
+  }
+  72% {
+    box-shadow: 0 0 0 0.48rem transparent;
+    opacity: 0.82;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    opacity: 1;
+  }
+}
+
+@keyframes codex-voice-wave-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes codex-working-dot {
+  0%,
+  10%,
+  to {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(1.2px);
+  }
+  55% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes codex-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Highlight sweeps across "Thinking" text (AGUI writing-block shimmer). */
+@keyframes codex-thinking-shimmer {
+  from {
+    background-position: 100% 50%;
+  }
+
+  to {
+    background-position: 0 50%;
+  }
+}
+
+@keyframes codex-thinking-dot {
+  0%,
+  18%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  46% {
+    opacity: 1;
+    transform: translateY(-1.5px);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: codex-fade-in 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .animate-question-card-enter {
+    animation: codex-question-card-enter 0.46s cubic-bezier(0.2, 0.9, 0.22, 1.12) both;
+    will-change: transform, opacity, filter;
+  }
+
+  .animate-question-card-exit {
+    animation: codex-question-card-exit 0.18s cubic-bezier(0.36, 0, 0.66, -0.3) both;
+    pointer-events: none;
+    will-change: transform, opacity, filter;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-question-card-enter,
+    .animate-question-card-exit {
+      animation-duration: 1ms;
+      filter: none;
+    }
+  }
+
+  /* Three-dot "thinking" indicator (the AGUI working-dot-wave). */
+  .working-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .working-dots > i {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background: currentColor;
+    animation: codex-working-dot 1s ease-in-out infinite;
+  }
+  .working-dots > i:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .working-dots > i:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-surface-hover) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: codex-shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* "Thinking" text shimmer: fixed neutral text with a glyph-only sweep overlay. */
+  .thinking-shimmer {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+    color: var(--thinking-text);
+  }
+
+  .thinking-shimmer-label {
+    position: relative;
+    display: inline-block;
+    background: none;
+    color: var(--thinking-text);
+  }
+
+  .thinking-shimmer-label::after {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    content: attr(data-text);
+    background-color: transparent;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 35%,
+      var(--thinking-highlight-edge) 45%,
+      var(--thinking-highlight-core) 50%,
+      var(--thinking-highlight-edge) 55%,
+      transparent 65%,
+      transparent 100%
+    );
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-size: 260% 100%;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    pointer-events: none;
+    animation: codex-thinking-shimmer 1.35s cubic-bezier(0.42, 0, 0.24, 1) infinite;
+    will-change: background-position;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .thinking-shimmer-label::selection {
+    background: var(--selection-bg);
+    color: var(--fg-primary);
+    -webkit-text-fill-color: var(--fg-primary);
+  }
+
+  .thinking-shimmer-dots {
+    display: inline-flex;
+    margin-left: 1px;
+    min-width: 1.05em;
+    color: var(--thinking-text);
+  }
+
+  .thinking-shimmer-dots > span {
+    display: inline-block;
+    animation: codex-thinking-dot 1.15s ease-in-out infinite;
+    will-change: opacity, transform;
+  }
+
+  .thinking-shimmer-dots > span:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .thinking-shimmer-dots > span:nth-child(3) {
+    animation-delay: 0.32s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .thinking-shimmer-label::after {
+      content: none;
+      animation: none;
+    }
+
+    .thinking-shimmer-dots > span {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+}

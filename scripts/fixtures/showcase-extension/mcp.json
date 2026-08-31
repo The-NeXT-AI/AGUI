@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "fixture-remote": {
+      "name": "Fixture Remote MCP",
+      "type": "streamablehttp",
+      "url": "https://example.invalid/mcp",
+      "headers": {
+        "Authorization": "Bearer ${secret:FIXTURE_TOKEN}",
+        "X-Fixture": "remote"
+      }
+    },
+    "fixture-secret": {
+      "name": "Fixture Secret MCP",
+      "url": "https://example.invalid/secret-mcp",
+      "env": {
+        "FIXTURE_TOKEN": "${secret:FIXTURE_TOKEN}"
+      }
+    }
+  }
+}

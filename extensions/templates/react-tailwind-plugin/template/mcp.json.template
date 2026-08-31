@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "__PLUGIN_NAME__": {
+      "name": "__DISPLAY_NAME__ MCP",
+      "type": "stdio",
+      "command": "./dist/mcp-server.js"
+    }
+  }
+}

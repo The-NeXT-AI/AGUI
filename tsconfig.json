@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/extensions" },
+    { "path": "./packages/asp" },
+    { "path": "./packages/runtime" },
+    { "path": "./packages/server" },
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

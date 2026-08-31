@@ -1,0 +1,43 @@
+<style>
+  .card {
+    border: 1px solid var(--agui-border);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--agui-surface) 74%, transparent);
+    padding: 12px;
+  }
+  h3 {
+    margin: 0 0 6px;
+    color: var(--agui-fg);
+    font-size: 13px;
+  }
+  p {
+    margin: 0 0 8px;
+    color: var(--agui-muted);
+    font-size: 12px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+  .badge {
+    display: inline-flex;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--agui-accent) 16%, transparent);
+    color: var(--agui-accent);
+    padding: 3px 6px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+</style>
+<article class="card">
+  <h3 id="title">Installed extension renderer</h3>
+  <p id="body"></p>
+  <span class="badge">Rendered by fixture.showcase</span>
+</article>
+<script>
+  function render(data) {
+    const value = data && data.value ? data.value : {};
+    root.getElementById("title").textContent = value.title || "Installed extension renderer";
+    root.getElementById("body").textContent = value.body || "";
+  }
+  render(agui.data);
+  root.addEventListener("agui:data", (event) => render(event.detail));
+</script>

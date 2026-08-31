@@ -1,0 +1,367 @@
+{
+  "name": "showcase",
+  "publisher": "fixture",
+  "version": "1.0.0",
+  "displayName": "Extension Showcase",
+  "description": "End-to-end fixture for every AGUI extension contribution point.",
+  "localizations": {
+    "zh": {
+      "displayName": "扩展示例",
+      "description": "覆盖 AGUI 扩展贡献点的端到端示例。",
+      "configuration": {
+        "title": "示例设置",
+        "properties": {
+          "fixture.showcase.greeting": {
+            "title": "问候语",
+            "description": "扩展示例返回给 Extension Host 的消息。"
+          },
+          "fixture.showcase.mode": {
+            "title": "执行模式",
+            "description": "示例扩展的执行模式。",
+            "enumLabels": {
+              "safe": "安全",
+              "fast": "快速"
+            }
+          },
+          "FIXTURE_TOKEN": {
+            "title": "示例令牌",
+            "description": "示例 MCP server 使用的加密密钥。"
+          }
+        }
+      },
+      "contributions": {
+        "fixture.showcase.sidebar": {
+          "title": "示例侧边栏"
+        },
+        "fixture.showcase.panel": {
+          "title": "示例"
+        },
+        "fixture.showcase.sidebarView": {
+          "name": "示例侧边栏"
+        },
+        "fixture.showcase.dashboard": {
+          "name": "示例"
+        },
+        "fixture.showcase.webview": {
+          "name": "示例 Webview"
+        },
+        "fixture.showcase.composer": {
+          "title": "示例输入区控件"
+        },
+        "fixture.showcase.header": {
+          "title": "示例标题栏控件"
+        },
+        "fixture.showcase.github": {
+          "title": "GitHub"
+        },
+        "fixture.showcase.github.issues": {
+          "title": "议题"
+        },
+        "fixture.showcase.github.issue.42": {
+          "title": "#42 添加仓库选择器",
+          "badge": "打开",
+          "description": "fixture/agui 中的议题 #42",
+          "initialMarkdown": "### 议题 #42：添加仓库选择器\n\n仓库：fixture/agui\n状态：打开\n作者：@octo-dev\n标签：enhancement, github\n\n侧边栏需要允许用户在已配置仓库之间切换，然后再加载 issue 和 pull request 树。\n\n讨论：\n- @octo-dev 希望支持跨仓库键盘导航。\n- @maintainer 建议复用现有 workspace picker 模式。\n- @designer 提醒长仓库名必须清晰截断。",
+          "developerInstructions": "你正在处理 fixture/agui 的 GitHub issue #42。除非用户明确指定其他目标，否则所有操作都应限定在该 issue。优先提供具体 GitHub 操作，例如总结讨论、草拟回复、建议标签或准备实现步骤。只有在已连接的 GitHub 工具实际执行后，才能声称已修改 GitHub。"
+        },
+        "fixture.showcase.github.pullRequests": {
+          "title": "拉取请求"
+        },
+        "fixture.showcase.github.pr.17": {
+          "title": "#17 虚拟会话树",
+          "badge": "评审",
+          "description": "fixture/agui 中的 pull request #17",
+          "initialMarkdown": "### Pull Request #17：虚拟会话树\n\n仓库：fixture/agui\n状态：请求评审\n作者：@octo-maintainer\nBase：main\nHead：virtual-session-tree\n\n摘要：\n- 增加插件驱动的虚拟树贡献点。\n- 将 issue 和 PR 节点打开为带上下文的 Agent 会话。\n- 让生成的会话不出现在普通项目列表中。\n\n讨论：\n- @reviewer 要求树贡献点具备稳定的权限边界。\n- @octo-maintainer 希望每个节点能够稳定复用会话。",
+          "developerInstructions": "你正在处理 fixture/agui 的 GitHub pull request #17。除非用户指定其他目标，否则将用户请求理解为该 PR 的评审或维护任务。只有在已连接的 GitHub 工具实际执行后，才能声称已 approve、merge、comment 或 push。"
+        },
+        "fixture.showcase.echo": {
+          "title": "回显扩展载荷",
+          "category": "示例"
+        },
+        "fixture.showcase.context": {
+          "title": "查看扩展上下文",
+          "category": "示例"
+        },
+        "fixture.showcase.storage": {
+          "title": "更新扩展存储",
+          "category": "示例"
+        },
+        "fixture.showcase.review-prompt": {
+          "title": "示例评审 prompt",
+          "description": "会自动注入的 prompt 贡献。"
+        }
+      }
+    }
+  },
+  "type": "module",
+  "engines": {
+    "agui": "^0.2.0"
+  },
+  "main": "./extension.mjs",
+  "activationEvents": [
+    "onCommand:fixture.showcase.echo",
+    "onCommand:fixture.showcase.context",
+    "onCommand:fixture.showcase.storage",
+    "onCommand:fixture.showcase.slow",
+    "onView:fixture.showcase.sidebarView",
+    "onView:fixture.showcase.dashboard",
+    "onView:fixture.showcase.webview",
+    "onChatRenderer:fixture.showcase.renderer",
+    "onAgentRun"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    }
+  },
+  "permissions": [
+    "ui.detailPanel",
+    "ui.sidebar",
+    "ui.composer",
+    "ui.header",
+    "ui.chatRenderer",
+    "theme",
+    "commands",
+    "agent.mcp",
+    "agent.skills",
+    "agent.prompts",
+    "secrets",
+    "network"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fixture.showcase.sidebar",
+          "title": "Showcase Sidebar",
+          "icon": "blocks",
+          "order": 90
+        }
+      ],
+      "panel": [
+        {
+          "id": "fixture.showcase.panel",
+          "title": "Showcase",
+          "icon": "panel",
+          "order": 90
+        }
+      ]
+    },
+    "views": {
+      "fixture.showcase.sidebar": [
+        {
+          "id": "fixture.showcase.sidebarView",
+          "name": "Showcase Sidebar",
+          "icon": "blocks",
+          "viewType": "web-component",
+          "entry": "./sidebar-component.html"
+        }
+      ],
+      "fixture.showcase.panel": [
+        {
+          "id": "fixture.showcase.dashboard",
+          "name": "Showcase",
+          "icon": "blocks",
+          "viewType": "web-component",
+          "entry": "./panel-component.html",
+          "order": 1
+        },
+        {
+          "id": "fixture.showcase.webview",
+          "name": "Showcase Webview",
+          "icon": "globe",
+          "viewType": "webview",
+          "entry": "./webview.html",
+          "order": 2
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "fixture.showcase.echo",
+          "when": "view == fixture.showcase.dashboard",
+          "group": "navigation"
+        }
+      ]
+    },
+    "chatRenderers": [
+      {
+        "id": "fixture.showcase.renderer",
+        "renderer": "fixture.card",
+        "renderMode": "web-component",
+        "entry": "./chat-card-component.html",
+        "priority": 200
+      }
+    ],
+    "composerControls": [
+      {
+        "id": "fixture.showcase.composer",
+        "title": "Showcase Composer Control",
+        "align": "left",
+        "viewType": "web-component",
+        "entry": "./composer-component.html",
+        "order": 90
+      }
+    ],
+    "headerControls": [
+      {
+        "id": "fixture.showcase.header",
+        "title": "Showcase Header Control",
+        "align": "right",
+        "viewType": "web-component",
+        "entry": "./header-component.html",
+        "order": 90
+      }
+    ],
+    "themes": [
+      {
+        "id": "fixture.showcase.midnight-cyan",
+        "label": "Midnight Cyan",
+        "type": "dark",
+        "path": "./theme.json"
+      }
+    ],
+    "styles": [
+      {
+        "id": "fixture.showcase.shell-style",
+        "path": "./styles.css"
+      }
+    ],
+    "sessionTree": [
+      {
+        "id": "fixture.showcase.github",
+        "title": "GitHub",
+        "icon": "github",
+        "order": 5,
+        "children": [
+          {
+            "id": "fixture.showcase.github.issues",
+            "title": "Issues",
+            "icon": "issue",
+            "kind": "folder",
+            "order": 1,
+            "children": [
+              {
+                "id": "fixture.showcase.github.issue.42",
+                "title": "#42 Add repository picker",
+                "icon": "issue",
+                "badge": "open",
+                "kind": "session",
+                "order": 1,
+                "description": "Issue #42 in fixture/agui",
+                "session": {
+                  "title": "Issue #42 Add repository picker",
+                  "projectPath": "/definitely/outside/the/current/workspace",
+                  "cwd": "/definitely/outside/the/current/workspace",
+                  "initialMarkdown": "### Issue #42: Add repository picker\n\nRepository: fixture/agui\nStatus: open\nAuthor: @octo-dev\nLabels: enhancement, github\n\nThe sidebar should let users switch between configured repositories before loading issue and pull request trees.\n\nDiscussion:\n- @octo-dev asked for keyboard navigation across repositories.\n- @maintainer suggested reusing the existing workspace picker patterns.\n- @designer noted that long repository names must truncate cleanly.",
+                  "developerInstructions": "You are operating on GitHub issue #42 in fixture/agui. When the user asks for changes, keep the response scoped to this issue. Prefer concrete GitHub actions such as summarizing discussion, drafting a reply, proposing labels, or preparing implementation steps. Do not claim to have modified GitHub unless a connected GitHub tool actually performs that action.",
+                  "metadata": {
+                    "provider": "github",
+                    "kind": "issue",
+                    "repository": "fixture/agui",
+                    "number": 42,
+                    "url": "https://github.com/fixture/agui/issues/42",
+                    "state": "open"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "fixture.showcase.github.pullRequests",
+            "title": "Pull Requests",
+            "icon": "git-pull-request",
+            "kind": "folder",
+            "order": 2,
+            "children": [
+              {
+                "id": "fixture.showcase.github.pr.17",
+                "title": "#17 Virtual session tree",
+                "icon": "git-pull-request",
+                "badge": "review",
+                "kind": "session",
+                "order": 1,
+                "description": "Pull request #17 in fixture/agui",
+                "session": {
+                  "title": "PR #17 Virtual session tree",
+                  "initialMarkdown": "### Pull Request #17: Virtual session tree\n\nRepository: fixture/agui\nStatus: review requested\nAuthor: @octo-maintainer\nBase: main\nHead: virtual-session-tree\n\nSummary:\n- Adds a plugin-backed virtual tree contribution.\n- Opens issue and PR nodes as contextual agent sessions.\n- Keeps generated sessions hidden from the regular project list.\n\nDiscussion:\n- @reviewer requested a stable permission boundary for tree contributions.\n- @octo-maintainer asked for deterministic session reuse per node.",
+                  "developerInstructions": "You are operating on GitHub pull request #17 in fixture/agui. Interpret user instructions as PR review or maintenance tasks for this PR unless they specify another target. Do not claim to approve, merge, comment, or push unless a connected GitHub tool actually performs that action.",
+                  "metadata": {
+                    "provider": "github",
+                    "kind": "pull_request",
+                    "repository": "fixture/agui",
+                    "number": 17,
+                    "url": "https://github.com/fixture/agui/pull/17",
+                    "state": "review_requested"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "fixture.showcase.echo",
+        "title": "Echo extension payload",
+        "category": "Showcase",
+        "icon": "refresh"
+      },
+      {
+        "id": "fixture.showcase.context",
+        "title": "Inspect extension context",
+        "category": "Showcase"
+      },
+      {
+        "id": "fixture.showcase.storage",
+        "title": "Update extension storage",
+        "category": "Showcase",
+        "hidden": true
+      }
+    ],
+    "configuration": {
+      "title": "Showcase settings",
+      "properties": {
+        "fixture.showcase.greeting": {
+          "type": "string",
+          "title": "Greeting",
+          "default": "Hello from the extension",
+          "description": "Message returned by the showcase extension."
+        },
+        "fixture.showcase.mode": {
+          "type": "string",
+          "title": "Execution mode",
+          "default": "safe",
+          "enum": [
+            "safe",
+            "fast"
+          ],
+          "enumLabels": {
+            "safe": "Safe",
+            "fast": "Fast"
+          },
+          "description": "Execution mode used by the showcase extension."
+        },
+        "FIXTURE_TOKEN": {
+          "type": "string",
+          "title": "Fixture token",
+          "secret": true,
+          "description": "Encrypted token used by the fixture MCP server."
+        }
+      }
+    },
+    "mcpServers": "./mcp.json",
+    "skills": "./skills",
+    "prompts": [
+      {
+        "id": "fixture.showcase.review-prompt",
+        "title": "Showcase review prompt",
+        "description": "An automatically injected prompt contribution.",
+        "path": "./prompts/review.md",
+        "autoInclude": true
+      }
+    ]
+  }
+}

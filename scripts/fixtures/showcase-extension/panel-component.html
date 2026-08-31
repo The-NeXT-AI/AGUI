@@ -1,0 +1,78 @@
+<style>
+  .card {
+    overflow: hidden;
+    border: 1px solid var(--agui-border);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--agui-surface) 76%, transparent);
+  }
+  header {
+    border-bottom: 1px solid var(--agui-border);
+    padding: 8px 12px;
+    color: var(--agui-fg);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+  }
+  p {
+    margin: 0;
+    color: var(--agui-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .badge {
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--agui-accent) 14%, transparent);
+    color: var(--agui-accent);
+    padding: 3px 6px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  button {
+    width: fit-content;
+    border: 1px solid var(--agui-border);
+    border-radius: 6px;
+    background: var(--agui-surface);
+    color: var(--agui-fg);
+    cursor: pointer;
+    padding: 6px 9px;
+    font: inherit;
+    font-size: 12px;
+  }
+  pre {
+    margin: 0;
+    color: var(--agui-muted);
+    font-size: 11px;
+    white-space: pre-wrap;
+  }
+</style>
+<section class="card">
+  <header>Extension system online</header>
+  <div class="body">
+    <p>This panel is rendered from an extension Web Component.</p>
+    <div class="row">
+      <span class="badge">shadow dom</span>
+      <span class="badge">lazy activated</span>
+    </div>
+    <button id="run" type="button">Run extension command</button>
+    <pre id="result"></pre>
+  </div>
+</section>
+<script>
+  const run = root.getElementById("run");
+  const result = root.getElementById("result");
+  run.addEventListener("click", async () => {
+    result.textContent = JSON.stringify(
+      await agui.command("fixture.showcase.echo", ["from-panel"]),
+    );
+  });
+</script>

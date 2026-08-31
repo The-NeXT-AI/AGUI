@@ -1,0 +1,5 @@
+model = "native-test"
+approval_policy = "untrusted"
+
+[hooks]
+pre_tool = "printf codex-hook"

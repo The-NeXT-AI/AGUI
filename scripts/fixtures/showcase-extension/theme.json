@@ -1,0 +1,29 @@
+{
+  "type": "dark",
+  "colors": {
+    "canvas": "#061216",
+    "surface": "#0b1c21",
+    "surfaceHover": "#123039",
+    "foreground": "#e4fbff",
+    "mutedForeground": "#9ec5cc",
+    "border": "#24505a",
+    "accent": "#36d7e7",
+    "accentForeground": "#031114",
+    "info": "#67e8f9",
+    "selection": "#164e63"
+  },
+  "terminal": {
+    "background": "#061216",
+    "foreground": "#d9f8fb",
+    "cursor": "#36d7e7",
+    "cyan": "#22d3ee",
+    "brightCyan": "#67e8f9"
+  },
+  "monaco": {
+    "base": "vs-dark",
+    "colors": {
+      "editor.background": "#061216",
+      "editor.foreground": "#e4fbff"
+    }
+  }
+}

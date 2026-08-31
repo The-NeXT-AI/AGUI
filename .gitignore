@@ -1,0 +1,16 @@
+node_modules
+dist
+!extensions/github/dist/
+!extensions/github/dist/**
+dist-ssr
+dist-electron
+release
+*.tsbuildinfo
+*.local
+*.local.*
+.DS_Store
+.vite
+.astro
+
+# Local, non-distributable reference material; never commit or publish.
+/reference/

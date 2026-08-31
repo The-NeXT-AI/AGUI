@@ -1,0 +1,48 @@
+{
+  "appId": "com.agui.desktop",
+  "productName": "AGUI",
+  "asar": true,
+  "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+  "directories": {
+    "output": "release"
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "musistudio",
+      "repo": "AGUI",
+      "releaseType": "draft"
+    }
+  ],
+  "files": [
+    "dist/**/*",
+    "dist-electron/**/*",
+    "packages/asp/dist/**/*",
+    "packages/asp/package.json",
+    "packages/extensions/dist/**/*",
+    "packages/extensions/package.json",
+    "LICENSE",
+    "NOTICE.md",
+    "README.md",
+    "package.json",
+    "node_modules/@agui/asp/**/*",
+    "node_modules/@agui/extensions/**/*",
+    "node_modules/ws/**/*"
+  ],
+  "mac": {
+    "category": "public.app-category.developer-tools",
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist",
+    "extendInfo": {
+      "NSMicrophoneUsageDescription": "AGUI uses the microphone to turn your voice into composer text."
+    },
+    "target": ["dmg", "zip"]
+  },
+  "win": {
+    "target": ["nsis"]
+  },
+  "linux": {
+    "category": "Development",
+    "target": ["AppImage"]
+  }
+}

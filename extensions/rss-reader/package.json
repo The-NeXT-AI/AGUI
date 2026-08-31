@@ -1,0 +1,158 @@
+{
+  "name": "rss-reader",
+  "publisher": "agui",
+  "version": "0.1.0",
+  "displayName": "RSS Reader",
+  "description": "Subscribe to RSS feeds and preview new articles from the session tree.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "extensions/rss-reader"
+  },
+  "localizations": {
+    "zh": {
+      "displayName": "RSS 阅读器",
+      "description": "订阅 RSS 源，并在会话树中预览最新文章。",
+      "configuration": {
+        "title": "RSS 设置",
+        "properties": {
+          "agui.rss-reader.enabled": {
+            "title": "启用 RSS 阅读器",
+            "description": "在左侧会话树中显示 RSS 订阅源。"
+          },
+          "agui.rss-reader.feeds": {
+            "title": "RSS 订阅源",
+            "description": "要显示在会话树中的 RSS 或 Atom 源。"
+          },
+          "agui.rss-reader.maxItemsPerFeed": {
+            "title": "每页显示数量",
+            "description": "每次在 RSS 源下加载的文章数量。"
+          },
+          "agui.rss-reader.includeContent": {
+            "title": "包含正文",
+            "description": "可用时使用 feed 正文；缺少正文时抓取原文页面并抽取正文。"
+          }
+        }
+      },
+      "contributions": {
+        "agui.rss-reader.root": {
+          "title": "RSS 阅读器"
+        }
+      }
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.ui.json && node scripts/build-ui.js && tsc -p tsconfig.json"
+  },
+  "files": [
+    "dist/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "agui": "^0.2.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:agui.rss-reader.sessionTree",
+    "onCommand:agui.rss-reader.feedItems",
+    "onCommand:agui.rss-reader.refresh",
+    "onConfiguration:agui.rss-reader.configuration",
+    "onChatRenderer:agui.rss-reader.itemRenderer"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "permissions": [
+    "ui.sessionTree",
+    "ui.chatRenderer",
+    "ui.webComponent.trusted",
+    "agent.sessionContext",
+    "network",
+    "commands"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "agui.rss-reader.sessionTree",
+        "title": "Build RSS Reader session tree",
+        "category": "RSS Reader",
+        "hidden": true
+      },
+      {
+        "id": "agui.rss-reader.feedItems",
+        "title": "Load RSS Reader feed items",
+        "category": "RSS Reader",
+        "hidden": true
+      },
+      {
+        "id": "agui.rss-reader.refresh",
+        "title": "Refresh RSS Reader feeds",
+        "category": "RSS Reader",
+        "hidden": true
+      }
+    ],
+    "chatRenderers": [
+      {
+        "id": "agui.rss-reader.itemRenderer",
+        "renderer": "agui.rss-reader.item",
+        "renderMode": "web-component",
+        "entry": "dist/item-renderer.html",
+        "priority": 100
+      }
+    ],
+    "configuration": {
+      "title": "RSS Reader settings",
+      "view": {
+        "id": "agui.rss-reader.configuration",
+        "name": "RSS Reader configuration",
+        "viewType": "web-component",
+        "entry": "dist/configuration.html"
+      },
+      "properties": {
+        "agui.rss-reader.enabled": {
+          "type": "boolean",
+          "title": "Enable RSS Reader",
+          "default": true,
+          "restricted": true,
+          "description": "Show RSS feeds in the session tree."
+        },
+        "agui.rss-reader.feeds": {
+          "type": "array",
+          "title": "RSS feeds",
+          "default": [],
+          "restricted": true,
+          "description": "RSS or Atom feeds to show in the session tree."
+        },
+        "agui.rss-reader.maxItemsPerFeed": {
+          "type": "number",
+          "title": "Items per page",
+          "default": 8,
+          "restricted": true,
+          "description": "Number of articles to load per page under each feed."
+        },
+        "agui.rss-reader.includeContent": {
+          "type": "boolean",
+          "title": "Load article content",
+          "default": true,
+          "restricted": true,
+          "description": "Use feed content when available; fetch linked article pages when the feed only provides a short summary."
+        }
+      }
+    },
+    "sessionTree": [
+      {
+        "id": "agui.rss-reader.root",
+        "title": "RSS Reader",
+        "icon": "rss",
+        "order": 6,
+        "command": "agui.rss-reader.sessionTree",
+        "children": []
+      }
+    ]
+  }
+}

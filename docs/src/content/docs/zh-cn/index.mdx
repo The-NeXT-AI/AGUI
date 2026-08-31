@@ -1,0 +1,64 @@
+---
+title: 文档
+description: AGUI Desktop 与 Agent Server Protocol runtime 的中文文档入口。
+---
+
+<div className="mint-home">
+  <p className="mint-home-subtitle">AGUI Desktop 是面向桌面与 Web 团队的 ASP-native、可扩展编码 Agent 客户端。</p>
+
+  <div className="mint-feature-grid">
+    <a className="mint-feature-card" href="/zh-cn/getting-started/installation/">
+      <span className="mint-feature-visual mint-feature-visual-rocket"></span>
+      <span className="mint-feature-title">快速开始</span>
+      <span className="mint-feature-copy">安装依赖，并在本地运行桌面应用或纯 Web 模式。</span>
+    </a>
+    <a className="mint-feature-card" href="/zh-cn/getting-started/architecture/">
+      <span className="mint-feature-visual mint-feature-visual-window"></span>
+      <span className="mint-feature-title">架构</span>
+      <span className="mint-feature-copy">理解 renderer、runtime、ASP manager 与 provider 边界。</span>
+    </a>
+    <a className="mint-feature-card" href="/zh-cn/guides/providers/">
+      <span className="mint-feature-visual mint-feature-visual-agent"></span>
+      <span className="mint-feature-title">Provider 配置</span>
+      <span className="mint-feature-copy">配置 Codex、Claude Code、OpenCode、Kilo 或自定义 ASP Agent。</span>
+    </a>
+    <a className="mint-feature-card" href="/zh-cn/guides/extensions/">
+      <span className="mint-feature-visual mint-feature-visual-blocks"></span>
+      <span className="mint-feature-title">扩展开发</span>
+      <span className="mint-feature-copy">添加视图、命令、渲染器、MCP 资源、Skills 和 UI region。</span>
+    </a>
+  </div>
+</div>
+
+## AGUI 解决什么问题
+
+AGUI 为编码 Agent 桌面端提供稳定的宿主界面：
+
+- Provider adapter 将各家 Agent 输出转换为 ASP 事件。
+- Shell 以一致的方式渲染对话、计划、工具调用、diff、artifact、resource、审批和追问。
+- 会话保留各 provider 自己的连续上下文，不会把一个 provider 的会话 ID 泄露给另一个 provider。
+- 扩展可以新增界面 surface 和 Agent 能力，不需要 patch 核心 renderer 代码。
+
+## 选择入口
+
+| 任务                       | 从这里开始                                         |
+| -------------------------- | -------------------------------------------------- |
+| 在本地运行应用             | [安装与运行](/zh-cn/getting-started/installation/) |
+| 理解 runtime               | [架构](/zh-cn/getting-started/architecture/)       |
+| 添加或配置 provider        | [Provider 指南](/zh-cn/guides/providers/)          |
+| 开发扩展                   | [扩展指南](/zh-cn/guides/extensions/)              |
+| 定制品牌构建               | [产品定制](/zh-cn/guides/customization/)           |
+| 在同一会话中混用多个 Agent | [多 Agent 会话](/zh-cn/guides/multi-agent/)        |
+| 驱动浏览器或调度定时任务   | [浏览器自动化](/zh-cn/guides/browser-automation/)  |
+
+## 认识仓库结构
+
+```text
+packages/app          Renderer React UI、Shell、聊天、扩展 runtime
+packages/asp          ASP protocol、transport、provider store、adapter
+packages/runtime      Electron 与 Node runtime 共享服务
+packages/server       纯 Web 模式 JSON-RPC server
+packages/extensions   Extension manifest、IPC 与 UI schema 类型
+packages/electron     Electron shell、IPC、preload、桌面集成
+docs                  Astro 文档站与既有 Markdown 文档
+```

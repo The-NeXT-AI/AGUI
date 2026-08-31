@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "packages/electron",
+    "outDir": "dist-electron",
+    "tsBuildInfoFile": "tsconfig.electron.tsbuildinfo",
+    "types": ["node", "electron"],
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "sourceMap": true
+  },
+  "include": ["packages/electron/**/*.ts", "packages/electron/**/*.cts"],
+  "references": [
+    { "path": "./packages/extensions" },
+    { "path": "./packages/asp" },
+    { "path": "./packages/runtime" }
+  ]
+}

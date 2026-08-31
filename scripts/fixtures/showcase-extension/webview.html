@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="agui-extension-view" content="showcase-webview" />
+  </head>
+  <body style="padding: 16px">
+    <h1 style="font-size: 16px">Webview extension online</h1>
+    <p id="network-result">Checking network sandbox…</p>
+    <button id="echo" type="button">Run bridged command</button>
+    <pre id="command-result">Waiting</pre>
+    <script>
+      fetch("https://example.invalid/blocked-by-csp")
+        .then(() => {
+          document.getElementById("network-result").textContent = "Unexpected network access";
+        })
+        .catch(() => {
+          document.getElementById("network-result").textContent = "Network blocked by CSP";
+        });
+      document.getElementById("echo").addEventListener("click", async () => {
+        const result = await window.agui.command("fixture.showcase.echo", ["from-webview"]);
+        document.getElementById("command-result").textContent = JSON.stringify(result);
+      });
+      window.agui.command("fixture.showcase.echo", ["automatic-webview-check"]).then((result) => {
+        document.getElementById("command-result").textContent = JSON.stringify(result);
+      });
+    </script>
+  </body>
+</html>

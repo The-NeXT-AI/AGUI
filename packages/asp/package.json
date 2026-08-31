@@ -1,0 +1,68 @@
+{
+  "name": "@agui/asp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "packages/asp"
+  },
+  "files": [
+    "dist/**",
+    "schema/**",
+    "docs/**"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./manager": {
+      "types": "./dist/asp-manager.d.ts",
+      "default": "./dist/asp-manager.js"
+    },
+    "./protocol": {
+      "types": "./dist/asp-protocol.d.ts",
+      "default": "./dist/asp-protocol.js"
+    },
+    "./schema": {
+      "types": "./dist/asp-schema.d.ts",
+      "default": "./dist/asp-schema.js"
+    },
+    "./schema/v1": "./schema/v1/schema.json",
+    "./provider-store": {
+      "types": "./dist/provider-store.d.ts",
+      "default": "./dist/provider-store.js"
+    },
+    "./runtime-adapters": {
+      "types": "./dist/asp-runtime-adapters.d.ts",
+      "default": "./dist/asp-runtime-adapters.js"
+    },
+    "./transport": {
+      "types": "./dist/asp-transport.d.ts",
+      "default": "./dist/asp-transport.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "node-pty": "^1.1.0",
+    "ws": "^8.18.3",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "~5.7.0"
+  }
+}

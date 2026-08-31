@@ -1,0 +1,48 @@
+{
+  "name": "@agui/runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "packages/runtime"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@agui/extensions": "workspace:*",
+    "@agui/asp": "workspace:*",
+    "node-pty": "^1.1.0",
+    "openai": "^7.4.0",
+    "pg": "^8.23.0",
+    "sqlite3": "^6.0.1",
+    "tree-sitter": "0.21.1",
+    "tree-sitter-typescript": "0.23.2",
+    "typescript": "~5.7.0",
+    "ws": "^8.18.3",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.23.1",
+    "@types/ws": "^8.18.1"
+  }
+}

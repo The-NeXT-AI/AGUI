@@ -1,0 +1,1742 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "type": { "type": "string", "const": "run" },
+            "method": { "type": "string", "const": "run" },
+            "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "threadId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cwd": { "type": "string", "minLength": 1, "maxLength": 32768 },
+            "prompt": { "type": "string", "maxLength": 16000000 },
+            "conversationContext": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "approvalMode": { "type": "string", "enum": ["request", "auto", "full"] },
+            "additionalDeveloperInstructions": { "type": "string", "maxLength": 2000000 },
+            "attachments": {
+              "maxItems": 1000,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": { "type": "string", "enum": ["directory", "file", "other"] },
+                  "name": { "type": "string", "maxLength": 8192 },
+                  "path": { "type": "string", "maxLength": 32768 }
+                },
+                "required": ["kind", "name", "path"],
+                "additionalProperties": {}
+              }
+            },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "effort": {
+              "type": "string",
+              "enum": ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+            },
+            "extensions": {
+              "maxItems": 256,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                  "version": { "type": "string", "minLength": 1, "maxLength": 256 },
+                  "options": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": {}
+                  }
+                },
+                "required": ["id"],
+                "additionalProperties": {}
+              }
+            },
+            "enabledAppExtensions": {
+              "maxItems": 1000,
+              "type": "array",
+              "items": { "type": "string", "minLength": 1, "maxLength": 256 }
+            },
+            "input": {
+              "type": "object",
+              "properties": {
+                "attachments": { "maxItems": 1000, "type": "array", "items": {} },
+                "parts": {
+                  "maxItems": 10000,
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "text" },
+                          "text": { "type": "string", "maxLength": 16000000 }
+                        },
+                        "required": ["type", "text"],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "file_ref" },
+                          "path": { "type": "string", "minLength": 1, "maxLength": 32768 },
+                          "mimeType": { "type": "string", "maxLength": 256 }
+                        },
+                        "required": ["type", "path"],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "directory_ref" },
+                          "path": { "type": "string", "minLength": 1, "maxLength": 32768 }
+                        },
+                        "required": ["type", "path"],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "image_ref" },
+                          "path": { "type": "string", "minLength": 1, "maxLength": 32768 },
+                          "mimeType": { "type": "string", "maxLength": 256 }
+                        },
+                        "required": ["type", "path"],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "image_base64" },
+                          "data": { "type": "string", "maxLength": 32000000 },
+                          "mimeType": { "type": "string", "minLength": 1, "maxLength": 256 }
+                        },
+                        "required": ["type", "data", "mimeType"],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "uri" },
+                          "uri": { "type": "string", "minLength": 1, "maxLength": 16384 },
+                          "mimeType": { "type": "string", "maxLength": 256 }
+                        },
+                        "required": ["type", "uri"],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string", "const": "raw" },
+                          "protocol": { "type": "string", "minLength": 1, "maxLength": 256 },
+                          "value": {}
+                        },
+                        "required": ["type", "protocol", "value"],
+                        "additionalProperties": {}
+                      }
+                    ]
+                  }
+                },
+                "messages": { "maxItems": 10000, "type": "array", "items": {} }
+              },
+              "required": ["attachments", "parts", "messages"],
+              "additionalProperties": {}
+            },
+            "mcpServers": {},
+            "model": { "type": "string", "maxLength": 1024 },
+            "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "skills": {
+              "maxItems": 10000,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "propertyNames": { "type": "string" },
+                "additionalProperties": {}
+              }
+            },
+            "speed": { "type": "string", "enum": ["default", "fast"] },
+            "preserveNativeEvents": { "type": "boolean" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "type",
+            "method",
+            "runId",
+            "providerId",
+            "threadId",
+            "cwd",
+            "prompt",
+            "approvalMode",
+            "attachments",
+            "clientCapabilities",
+            "extensions",
+            "input"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "asp": { "type": "string", "const": "agent-server-protocol" },
+                "jsonrpc": { "type": "string", "const": "2.0" },
+                "version": { "type": "string", "const": "1" },
+                "type": { "type": "string", "const": "abort" },
+                "method": { "type": "string", "const": "run.cancel" },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "reason": { "type": "string", "maxLength": 8192 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                "reason": { "type": "string", "maxLength": 8192 },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+              },
+              "required": ["asp", "version", "type", "runId"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "asp": { "type": "string", "const": "agent-server-protocol" },
+                "jsonrpc": { "type": "string", "const": "2.0" },
+                "version": { "type": "string", "const": "1" },
+                "type": { "type": "string", "const": "abort" },
+                "method": { "type": "string", "const": "run.cancel" },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "reason": { "type": "string", "maxLength": 8192 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                "reason": { "type": "string", "maxLength": 8192 },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+              },
+              "required": ["asp", "version", "method", "params"],
+              "additionalProperties": {}
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "type": { "type": "string", "const": "approval_result" },
+            "approvalId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "decision": {
+              "type": "string",
+              "enum": ["allow", "allow-session", "allow-always", "deny", "cancel"]
+            },
+            "message": { "type": "string", "maxLength": 1000000 },
+            "method": { "type": "string", "minLength": 1, "maxLength": 256 }
+          },
+          "required": ["asp", "version", "type", "decision", "method"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "type": { "type": "string", "const": "question_result" },
+            "method": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "questionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "result": {}
+          },
+          "required": ["asp", "version", "type", "result"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "type": { "type": "string", "const": "extension_invoke" },
+            "method": { "type": "string", "const": "extension.invoke" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "params": {
+              "type": "object",
+              "properties": {
+                "extension": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "method": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "payload": {},
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+              },
+              "required": ["extension", "method"],
+              "additionalProperties": {}
+            }
+          },
+          "required": ["asp", "version", "type", "method", "clientCapabilities", "id", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "type": { "type": "string", "const": "capabilities" },
+            "method": { "type": "string", "const": "capabilities" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "clientInfo": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "version": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "title": { "type": "string", "maxLength": 8192 },
+                "url": { "type": "string", "maxLength": 16384 }
+              },
+              "required": ["name", "version"],
+              "additionalProperties": {}
+            },
+            "supportedProtocolVersions": {
+              "minItems": 1,
+              "maxItems": 64,
+              "type": "array",
+              "items": { "type": "string", "minLength": 1, "maxLength": 256 }
+            },
+            "type": { "type": "string", "const": "initialize" },
+            "method": { "type": "string", "const": "initialize" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "supportedProtocolVersions",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "type": { "type": "string", "const": "list_models" },
+            "method": { "type": "string", "const": "list_models" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cwd": { "type": "string", "minLength": 1, "maxLength": 32768 },
+            "projectPath": { "type": "string", "maxLength": 32768 },
+            "title": { "type": "string", "maxLength": 8192 },
+            "type": { "type": "string", "const": "new_session" },
+            "method": { "type": "string", "const": "new_session" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "cwd",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cwd": { "type": "string", "maxLength": 32768 },
+            "projectPath": { "type": "string", "maxLength": 32768 },
+            "type": { "type": "string", "const": "list_sessions" },
+            "method": { "type": "string", "const": "list_sessions" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "type": { "type": "string", "const": "session_messages" },
+            "method": { "type": "string", "const": "session_messages" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "providerSessionId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cwd": { "type": "string", "maxLength": 32768 },
+            "projectPath": { "type": "string", "maxLength": 32768 },
+            "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "type": { "type": "string", "const": "resume_session" },
+            "method": { "type": "string", "const": "resume_session" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "providerSessionId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cwd": { "type": "string", "maxLength": 32768 },
+            "projectPath": { "type": "string", "maxLength": 32768 },
+            "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "transcriptPath": { "type": "string", "maxLength": 32768 },
+            "type": { "type": "string", "const": "delete_session" },
+            "method": { "type": "string", "const": "delete_session" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "providerSessionId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "type": { "type": "string", "const": "session_usage" },
+            "method": { "type": "string", "const": "session_usage" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "providerSessionId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "clientCapabilities": {
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {}
+            },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "providerId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "type": { "type": "string", "const": "close_session" },
+            "method": { "type": "string", "const": "close_session" }
+          },
+          "required": [
+            "asp",
+            "version",
+            "clientCapabilities",
+            "id",
+            "providerId",
+            "providerSessionId",
+            "type",
+            "method"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "not": {} },
+            "result": {},
+            "type": { "not": {} }
+          },
+          "required": ["asp", "version", "id", "result"],
+          "additionalProperties": {}
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.fs.read_text_file" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "path": { "type": "string", "minLength": 1, "maxLength": 32768 },
+                    "line": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "limit": { "type": "integer", "exclusiveMinimum": 0, "maximum": 100000 }
+                  },
+                  "required": ["path"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.fs.write_text_file" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "path": { "type": "string", "minLength": 1, "maxLength": 32768 },
+                    "content": { "type": "string", "maxLength": 16000000 }
+                  },
+                  "required": ["path", "content"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.terminal.create" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "command": { "type": "string", "minLength": 1, "maxLength": 8192 },
+                    "args": {
+                      "maxItems": 1000,
+                      "type": "array",
+                      "items": { "type": "string", "maxLength": 8192 }
+                    },
+                    "cwd": { "type": "string", "maxLength": 32768 },
+                    "env": {
+                      "type": "object",
+                      "propertyNames": { "type": "string" },
+                      "additionalProperties": { "type": "string" }
+                    }
+                  },
+                  "required": ["id", "command"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.terminal.output" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "maxChars": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": ["id"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.terminal.wait_for_exit" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "timeoutMs": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": ["id"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.terminal.kill" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": { "id": { "type": "string", "minLength": 1, "maxLength": 256 } },
+                  "required": ["id"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.terminal.release" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": { "id": { "type": "string", "minLength": 1, "maxLength": 256 } },
+                  "required": ["id"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.permission.request" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "method": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "title": { "type": "string", "maxLength": 8192 },
+                    "scope": { "type": "string", "maxLength": 1024 },
+                    "options": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": ["allow", "allow-session", "allow-always", "deny", "cancel"]
+                      }
+                    },
+                    "input": {}
+                  },
+                  "required": ["method"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "method": { "type": "string", "const": "client.elicitation.create" },
+            "params": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "required": ["runId"],
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string", "maxLength": 8192 },
+                    "message": { "type": "string", "maxLength": 1000000 },
+                    "questions": { "maxItems": 1000, "type": "array", "items": {} },
+                    "metadata": {
+                      "type": "object",
+                      "propertyNames": { "type": "string" },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": ["message"],
+                  "additionalProperties": {}
+                }
+              ]
+            }
+          },
+          "required": ["asp", "version", "id", "method", "params"],
+          "additionalProperties": {}
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "result": {},
+            "error": { "not": {} }
+          },
+          "required": ["asp", "version", "id", "result"],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" },
+            "id": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+            "error": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "message": { "type": "string", "minLength": 1, "maxLength": 1000000 },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "retryable": { "type": "boolean" },
+                    "details": {},
+                    "method": { "type": "string", "maxLength": 256 },
+                    "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 }
+                  },
+                  "additionalProperties": {}
+                }
+              },
+              "required": ["code", "message"],
+              "additionalProperties": false
+            },
+            "result": { "not": {} }
+          },
+          "required": ["asp", "version", "id", "error"],
+          "additionalProperties": {}
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "asp": { "type": "string", "const": "agent-server-protocol" },
+            "jsonrpc": { "type": "string", "const": "2.0" },
+            "version": { "type": "string", "const": "1" }
+          },
+          "required": ["asp", "version"],
+          "additionalProperties": {}
+        },
+        {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "run_started" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 }
+              },
+              "required": ["type", "runId"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "message_delta" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "data": { "type": "string", "maxLength": 16000000 },
+                "itemId": { "type": "string", "minLength": 1, "maxLength": 256 }
+              },
+              "required": ["type", "runId", "data"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "message_part" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "part": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "text" },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "content": { "type": "string", "maxLength": 16000000 },
+                        "format": { "type": "string", "enum": ["markdown", "plain"] },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": {}
+                        },
+                        "title": { "type": "string", "maxLength": 8192 }
+                      },
+                      "required": ["type", "id", "content"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "enum": ["reasoning", "status", "citation"] },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "content": { "type": "string", "maxLength": 16000000 },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": {}
+                        },
+                        "status": { "type": "string", "maxLength": 1024 },
+                        "title": { "type": "string", "maxLength": 8192 },
+                        "uri": { "type": "string", "maxLength": 16384 }
+                      },
+                      "required": ["type", "id"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "plan" },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "content": { "type": "string", "maxLength": 16000000 },
+                        "items": {
+                          "maxItems": 10000,
+                          "type": "array",
+                          "items": { "type": "string", "maxLength": 1000000 }
+                        },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": {}
+                        },
+                        "title": { "type": "string", "maxLength": 8192 }
+                      },
+                      "required": ["type", "id"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "enum": ["resource", "artifact"] },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "artifactId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "app": {
+                          "type": "object",
+                          "properties": {
+                            "title": { "type": "string", "maxLength": 8192 },
+                            "html": { "type": "string", "maxLength": 16000000 },
+                            "src": { "type": "string", "maxLength": 16384 },
+                            "uri": { "type": "string", "maxLength": 16384 },
+                            "resourceUri": { "type": "string", "maxLength": 16384 },
+                            "height": { "type": "number", "minimum": 0, "maximum": 20000 },
+                            "toolInput": {},
+                            "toolOutput": {},
+                            "toolResponseMetadata": {},
+                            "widgetState": {},
+                            "metadata": {
+                              "type": "object",
+                              "propertyNames": { "type": "string" },
+                              "additionalProperties": {}
+                            }
+                          },
+                          "additionalProperties": {}
+                        },
+                        "content": { "type": "string", "maxLength": 16000000 },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": {}
+                        },
+                        "mimeType": { "type": "string", "maxLength": 256 },
+                        "name": { "type": "string", "maxLength": 8192 },
+                        "path": { "type": "string", "maxLength": 32768 },
+                        "title": { "type": "string", "maxLength": 8192 },
+                        "uri": { "type": "string", "maxLength": 16384 }
+                      },
+                      "required": ["type", "id"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "diff" },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "content": { "type": "string", "maxLength": 16000000 },
+                        "language": { "type": "string", "maxLength": 256 },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": {}
+                        },
+                        "oldPath": { "type": "string", "maxLength": 32768 },
+                        "path": { "type": "string", "maxLength": 32768 },
+                        "title": { "type": "string", "maxLength": 8192 }
+                      },
+                      "required": ["type", "id", "content"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "raw" },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "label": { "type": "string", "maxLength": 8192 },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": {}
+                        },
+                        "value": {}
+                      },
+                      "required": ["type", "id", "value"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "tool" },
+                        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                        "toolEvent": { "$ref": "#/$defs/__schema0" }
+                      },
+                      "required": ["type", "id", "toolEvent"],
+                      "additionalProperties": {}
+                    }
+                  ]
+                }
+              },
+              "required": ["type", "runId", "part"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "tool_event" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "toolEvent": { "$ref": "#/$defs/__schema0" }
+              },
+              "required": ["type", "runId", "toolEvent"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "session_state" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "state": {
+                  "type": "object",
+                  "properties": {
+                    "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "title": { "type": "string", "maxLength": 8192 },
+                    "cwd": { "type": "string", "maxLength": 32768 },
+                    "model": { "type": "string", "maxLength": 1024 },
+                    "effort": { "type": "string", "maxLength": 256 },
+                    "streaming": { "type": "boolean" },
+                    "queue": {
+                      "type": "object",
+                      "properties": {
+                        "pending": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                        "mode": { "type": "string", "maxLength": 256 }
+                      },
+                      "required": ["pending"],
+                      "additionalProperties": {}
+                    },
+                    "context": {
+                      "type": "object",
+                      "properties": {
+                        "usedTokens": { "type": "number", "minimum": 0 },
+                        "windowTokens": { "type": "number", "exclusiveMinimum": 0 },
+                        "autoCompaction": { "type": "boolean" }
+                      },
+                      "additionalProperties": {}
+                    },
+                    "parentSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                    "checkpoints": {
+                      "maxItems": 10000,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                          "title": { "type": "string", "maxLength": 8192 },
+                          "createdAt": { "type": "number", "minimum": 0 },
+                          "metadata": {
+                            "type": "object",
+                            "propertyNames": { "type": "string" },
+                            "additionalProperties": {}
+                          }
+                        },
+                        "required": ["id"],
+                        "additionalProperties": {}
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "propertyNames": { "type": "string" },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "additionalProperties": {}
+                }
+              },
+              "required": ["type", "runId", "state"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "approval_request" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "approvalId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "title": { "type": "string", "minLength": 1, "maxLength": 8192 },
+                "method": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "scope": { "type": "string", "maxLength": 1024 },
+                "params": {},
+                "options": {
+                  "maxItems": 32,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["allow", "allow-session", "allow-always", "deny", "cancel"]
+                  }
+                }
+              },
+              "required": ["type", "method"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "question_request" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "questionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "title": { "type": "string", "maxLength": 8192 },
+                "question": { "type": "string", "maxLength": 1000000 },
+                "instructions": { "type": "string", "maxLength": 1000000 },
+                "questions": { "maxItems": 1000, "type": "array", "items": {} },
+                "app": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string", "maxLength": 8192 },
+                    "html": { "type": "string", "maxLength": 16000000 },
+                    "src": { "type": "string", "maxLength": 16384 },
+                    "uri": { "type": "string", "maxLength": 16384 },
+                    "resourceUri": { "type": "string", "maxLength": 16384 },
+                    "height": { "type": "number", "minimum": 0, "maximum": 20000 },
+                    "toolInput": {},
+                    "toolOutput": {},
+                    "toolResponseMetadata": {},
+                    "widgetState": {},
+                    "metadata": {
+                      "type": "object",
+                      "propertyNames": { "type": "string" },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                "metadata": {
+                  "type": "object",
+                  "propertyNames": { "type": "string" },
+                  "additionalProperties": {}
+                }
+              },
+              "required": ["type"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "extension_event" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "extension": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "event": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "payload": {},
+                "fallback": {
+                  "anyOf": [
+                    { "type": "string", "const": "none" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "message_delta" },
+                        "data": { "type": "string", "maxLength": 16000000 }
+                      },
+                      "required": ["type", "data"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "message_part" },
+                        "part": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": { "type": "string", "const": "text" },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "content": { "type": "string", "maxLength": 16000000 },
+                                "format": { "type": "string", "enum": ["markdown", "plain"] },
+                                "metadata": {
+                                  "type": "object",
+                                  "propertyNames": { "type": "string" },
+                                  "additionalProperties": {}
+                                },
+                                "title": { "type": "string", "maxLength": 8192 }
+                              },
+                              "required": ["type", "id", "content"],
+                              "additionalProperties": {}
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": ["reasoning", "status", "citation"]
+                                },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "content": { "type": "string", "maxLength": 16000000 },
+                                "metadata": {
+                                  "type": "object",
+                                  "propertyNames": { "type": "string" },
+                                  "additionalProperties": {}
+                                },
+                                "status": { "type": "string", "maxLength": 1024 },
+                                "title": { "type": "string", "maxLength": 8192 },
+                                "uri": { "type": "string", "maxLength": 16384 }
+                              },
+                              "required": ["type", "id"],
+                              "additionalProperties": {}
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": { "type": "string", "const": "plan" },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "content": { "type": "string", "maxLength": 16000000 },
+                                "items": {
+                                  "maxItems": 10000,
+                                  "type": "array",
+                                  "items": { "type": "string", "maxLength": 1000000 }
+                                },
+                                "metadata": {
+                                  "type": "object",
+                                  "propertyNames": { "type": "string" },
+                                  "additionalProperties": {}
+                                },
+                                "title": { "type": "string", "maxLength": 8192 }
+                              },
+                              "required": ["type", "id"],
+                              "additionalProperties": {}
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": { "type": "string", "enum": ["resource", "artifact"] },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "artifactId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 256
+                                },
+                                "app": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": { "type": "string", "maxLength": 8192 },
+                                    "html": { "type": "string", "maxLength": 16000000 },
+                                    "src": { "type": "string", "maxLength": 16384 },
+                                    "uri": { "type": "string", "maxLength": 16384 },
+                                    "resourceUri": { "type": "string", "maxLength": 16384 },
+                                    "height": { "type": "number", "minimum": 0, "maximum": 20000 },
+                                    "toolInput": {},
+                                    "toolOutput": {},
+                                    "toolResponseMetadata": {},
+                                    "widgetState": {},
+                                    "metadata": {
+                                      "type": "object",
+                                      "propertyNames": { "type": "string" },
+                                      "additionalProperties": {}
+                                    }
+                                  },
+                                  "additionalProperties": {}
+                                },
+                                "content": { "type": "string", "maxLength": 16000000 },
+                                "metadata": {
+                                  "type": "object",
+                                  "propertyNames": { "type": "string" },
+                                  "additionalProperties": {}
+                                },
+                                "mimeType": { "type": "string", "maxLength": 256 },
+                                "name": { "type": "string", "maxLength": 8192 },
+                                "path": { "type": "string", "maxLength": 32768 },
+                                "title": { "type": "string", "maxLength": 8192 },
+                                "uri": { "type": "string", "maxLength": 16384 }
+                              },
+                              "required": ["type", "id"],
+                              "additionalProperties": {}
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": { "type": "string", "const": "diff" },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "content": { "type": "string", "maxLength": 16000000 },
+                                "language": { "type": "string", "maxLength": 256 },
+                                "metadata": {
+                                  "type": "object",
+                                  "propertyNames": { "type": "string" },
+                                  "additionalProperties": {}
+                                },
+                                "oldPath": { "type": "string", "maxLength": 32768 },
+                                "path": { "type": "string", "maxLength": 32768 },
+                                "title": { "type": "string", "maxLength": 8192 }
+                              },
+                              "required": ["type", "id", "content"],
+                              "additionalProperties": {}
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": { "type": "string", "const": "raw" },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "label": { "type": "string", "maxLength": 8192 },
+                                "metadata": {
+                                  "type": "object",
+                                  "propertyNames": { "type": "string" },
+                                  "additionalProperties": {}
+                                },
+                                "value": {}
+                              },
+                              "required": ["type", "id", "value"],
+                              "additionalProperties": {}
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": { "type": "string", "const": "tool" },
+                                "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+                                "toolEvent": { "$ref": "#/$defs/__schema0" }
+                              },
+                              "required": ["type", "id", "toolEvent"],
+                              "additionalProperties": {}
+                            }
+                          ]
+                        }
+                      },
+                      "required": ["type", "part"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "tool_event" },
+                        "toolEvent": { "$ref": "#/$defs/__schema0" }
+                      },
+                      "required": ["type", "toolEvent"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "usage" },
+                        "usage": {
+                          "type": "object",
+                          "properties": {
+                            "contextTokens": { "type": "number", "minimum": 0 },
+                            "contextWindowTokens": { "type": "number", "exclusiveMinimum": 0 },
+                            "inputCachedTokens": { "type": "number", "minimum": 0 },
+                            "inputTokens": { "type": "number", "minimum": 0 },
+                            "outputCachedTokens": { "type": "number", "minimum": 0 },
+                            "outputTokens": { "type": "number", "minimum": 0 },
+                            "totalTokens": { "type": "number", "minimum": 0 }
+                          },
+                          "required": ["inputTokens", "outputTokens", "totalTokens"],
+                          "additionalProperties": {}
+                        },
+                        "model": { "type": "string", "maxLength": 1024 }
+                      },
+                      "required": ["type", "usage"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "enum": ["stdout", "stderr"] },
+                        "data": { "type": "string", "maxLength": 16000000 }
+                      },
+                      "required": ["type", "data"],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "type": "string", "const": "error" },
+                        "message": { "type": "string", "minLength": 1, "maxLength": 1000000 }
+                      },
+                      "required": ["type", "message"],
+                      "additionalProperties": {}
+                    }
+                  ]
+                },
+                "metadata": {
+                  "type": "object",
+                  "propertyNames": { "type": "string" },
+                  "additionalProperties": {}
+                }
+              },
+              "required": ["type", "extension", "event", "fallback"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "usage" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "usage": {
+                  "type": "object",
+                  "properties": {
+                    "contextTokens": { "type": "number", "minimum": 0 },
+                    "contextWindowTokens": { "type": "number", "exclusiveMinimum": 0 },
+                    "inputCachedTokens": { "type": "number", "minimum": 0 },
+                    "inputTokens": { "type": "number", "minimum": 0 },
+                    "outputCachedTokens": { "type": "number", "minimum": 0 },
+                    "outputTokens": { "type": "number", "minimum": 0 },
+                    "totalTokens": { "type": "number", "minimum": 0 }
+                  },
+                  "required": ["inputTokens", "outputTokens", "totalTokens"],
+                  "additionalProperties": {}
+                },
+                "model": { "type": "string", "maxLength": 1024 }
+              },
+              "required": ["type", "runId", "usage"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "enum": ["stdout", "stderr"] },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "data": { "type": "string", "maxLength": 16000000 }
+              },
+              "required": ["type", "runId", "data"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "error" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "message": { "type": "string", "minLength": 1, "maxLength": 1000000 }
+              },
+              "required": ["type", "runId", "message"],
+              "additionalProperties": {}
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "run_finished" },
+                "runId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "providerSessionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "durationMs": { "type": "number", "minimum": 0 },
+                "exitCode": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    { "type": "null" }
+                  ]
+                },
+                "success": { "type": "boolean" },
+                "stopReason": {
+                  "type": "string",
+                  "enum": [
+                    "end_turn",
+                    "canceled",
+                    "error",
+                    "timeout",
+                    "max_tokens",
+                    "max_turns",
+                    "refusal"
+                  ]
+                },
+                "usage": {
+                  "type": "object",
+                  "properties": {
+                    "contextTokens": { "type": "number", "minimum": 0 },
+                    "contextWindowTokens": { "type": "number", "exclusiveMinimum": 0 },
+                    "inputCachedTokens": { "type": "number", "minimum": 0 },
+                    "inputTokens": { "type": "number", "minimum": 0 },
+                    "outputCachedTokens": { "type": "number", "minimum": 0 },
+                    "outputTokens": { "type": "number", "minimum": 0 },
+                    "totalTokens": { "type": "number", "minimum": 0 }
+                  },
+                  "required": ["inputTokens", "outputTokens", "totalTokens"],
+                  "additionalProperties": {}
+                }
+              },
+              "required": ["type", "runId", "durationMs", "exitCode", "success"],
+              "additionalProperties": {}
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "__schema0": {
+      "type": "object",
+      "properties": {
+        "children": { "maxItems": 1000, "type": "array", "items": { "$ref": "#/$defs/__schema0" } },
+        "error": { "type": "string", "maxLength": 1000000 },
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "input": {},
+        "kind": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "metadata": {
+          "type": "object",
+          "propertyNames": { "type": "string" },
+          "additionalProperties": {}
+        },
+        "name": { "type": "string", "minLength": 1, "maxLength": 8192 },
+        "output": { "type": "string", "maxLength": 16000000 },
+        "parentId": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "phase": { "type": "string", "enum": ["started", "updated", "delta", "completed"] },
+        "semantic": {
+          "type": "object",
+          "properties": {
+            "toolType": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "operation": { "type": "string", "maxLength": 256 },
+            "schemaRef": { "type": "string", "maxLength": 2048 },
+            "resultKind": {
+              "type": "string",
+              "enum": ["text", "json", "diff", "diagnostics", "locations", "artifact"]
+            }
+          },
+          "required": ["toolType"],
+          "additionalProperties": {}
+        },
+        "status": { "type": "string", "maxLength": 1024 }
+      },
+      "required": ["id", "kind", "name", "phase"],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://agui.dev/schemas/asp/v1/schema.json",
+  "title": "Agent Server Protocol v1",
+  "description": "Canonical wire messages for Agent Server Protocol version 1."
+}

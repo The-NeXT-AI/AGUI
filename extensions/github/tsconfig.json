@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "esModuleInterop": false,
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": false,
+    "target": "ES2022",
+    "types": ["node"]
+  },
+  "include": ["src/extension.ts", "src/mcp-server.ts"]
+}

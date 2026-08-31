@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible problem in AGUI Desktop.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report a bug. Please remove secrets, tokens, private transcripts, and personal workspace data before submitting.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the shortest steps that reproduce the problem.
+      placeholder: |
+        1. Run ...
+        2. Click ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: AGUI version, commit SHA, or branch.
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Area
+      options:
+        - Electron app
+        - Web runtime
+        - Provider adapter
+        - Extensions
+        - MCP gateway
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Paste relevant logs with secrets removed.
+      render: shell
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: macOS 15, Windows 11, Ubuntu 24.04

@@ -1,0 +1,19 @@
+# __DISPLAY_NAME__
+
+__DESCRIPTION__
+
+## Development
+
+```bash
+pnpm --dir extensions/__PLUGIN_NAME__ build
+node scripts/package-extension.mjs extensions/__PLUGIN_NAME__
+```
+
+## Structure
+
+- `src/extension.ts` registers backend commands and session tree data.
+- `src/ui/*.tsx` contains React surfaces.
+- `scripts/build-ui.js` compiles each React surface into a self-contained HTML file under `dist/`.
+
+MCP support is optional. Generate with `--with-mcp` when the agent needs private tool access
+through MCP Gateway.

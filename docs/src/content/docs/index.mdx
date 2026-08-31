@@ -1,0 +1,64 @@
+---
+title: Documentation
+description: Bilingual documentation for AGUI Desktop and the Agent Server Protocol runtime.
+---
+
+<div className="mint-home">
+  <p className="mint-home-subtitle">AGUI Desktop is an ASP-native, extension-ready coding agent client for desktop and web teams.</p>
+
+  <div className="mint-feature-grid">
+    <a className="mint-feature-card" href="/getting-started/installation/">
+      <span className="mint-feature-visual mint-feature-visual-rocket"></span>
+      <span className="mint-feature-title">Quickstart</span>
+      <span className="mint-feature-copy">Install dependencies and run the desktop or pure web app locally.</span>
+    </a>
+    <a className="mint-feature-card" href="/getting-started/architecture/">
+      <span className="mint-feature-visual mint-feature-visual-window"></span>
+      <span className="mint-feature-title">Architecture</span>
+      <span className="mint-feature-copy">Understand the renderer, runtime, ASP manager, and provider boundaries.</span>
+    </a>
+    <a className="mint-feature-card" href="/guides/providers/">
+      <span className="mint-feature-visual mint-feature-visual-agent"></span>
+      <span className="mint-feature-title">Provider setup</span>
+      <span className="mint-feature-copy">Configure Codex, Claude Code, OpenCode, Kilo, or custom ASP agents.</span>
+    </a>
+    <a className="mint-feature-card" href="/guides/extensions/">
+      <span className="mint-feature-visual mint-feature-visual-blocks"></span>
+      <span className="mint-feature-title">Extensions</span>
+      <span className="mint-feature-copy">Add views, commands, renderers, MCP resources, skills, and UI regions.</span>
+    </a>
+  </div>
+</div>
+
+## Why AGUI
+
+AGUI gives coding agent desktop apps a stable host surface:
+
+- Provider adapters translate each agent into ASP events.
+- The shell renders conversations, plans, tool calls, diffs, artifacts, resources, approvals, and follow-up questions consistently.
+- Sessions keep provider-specific continuity without leaking one provider's session ID into another provider.
+- Extensions add new surfaces and agent capabilities without patching core renderer code.
+
+## Pick an entry point
+
+| Task                               | Where to start                                    |
+| ---------------------------------- | ------------------------------------------------- |
+| Run the app locally                | [Installation](/getting-started/installation/)    |
+| Understand the runtime             | [Architecture](/getting-started/architecture/)    |
+| Add or configure providers         | [Provider guide](/guides/providers/)              |
+| Build extensions                   | [Extension guide](/guides/extensions/)            |
+| Brand a downstream build           | [Customization](/guides/customization/)           |
+| Mix agents in one conversation     | [Multi-agent sessions](/guides/multi-agent/)      |
+| Drive the browser or schedule runs | [Browser automation](/guides/browser-automation/) |
+
+## Find your way around the repo
+
+```text
+packages/app          Renderer React UI, shell, chat, extension runtime
+packages/asp          ASP protocol, transports, provider store, adapters
+packages/runtime      Shared Electron and Node runtime services
+packages/server       Pure web mode JSON-RPC server
+packages/extensions   Extension manifest, IPC, and UI schema types
+packages/electron     Electron shell, IPC, preload, desktop integrations
+docs                  Astro documentation site and legacy Markdown docs
+```

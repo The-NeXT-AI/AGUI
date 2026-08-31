@@ -1,0 +1,35 @@
+{
+  "name": "@agui/app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "packages/app"
+  },
+  "main": "./src/runtime/index.ts",
+  "types": "./src/runtime/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/runtime/index.ts",
+      "default": "./src/runtime/index.ts"
+    }
+  },
+  "dependencies": {
+    "prosemirror-model": "^1.25.11",
+    "prosemirror-state": "^1.4.4",
+    "prosemirror-view": "^1.42.2"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ../../tsconfig.app.json --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.0"
+  }
+}

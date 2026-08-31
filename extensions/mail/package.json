@@ -1,0 +1,212 @@
+{
+  "name": "mail",
+  "publisher": "agui",
+  "version": "0.1.0",
+  "displayName": "Mail",
+  "description": "Connect to a mailbox over POP3/SMTP and show recent messages in the session tree.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-NeXT-AI/AGUI.git",
+    "directory": "extensions/mail"
+  },
+  "localizations": {
+    "zh": {
+      "displayName": "邮箱",
+      "description": "通过 POP3/SMTP 连接个人邮箱，并在会话树中显示最近邮件。",
+      "configuration": {
+        "title": "邮箱设置",
+        "properties": {
+          "agui.mail.account": {
+            "title": "邮箱账号",
+            "description": "邮箱地址、POP3/SMTP 主机、端口和加密方式。"
+          },
+          "agui.mail.messagesPerPage": {
+            "title": "每页邮件数",
+            "description": "展开收件箱时每次加载的邮件数量。"
+          },
+          "agui.mail.previewLines": {
+            "title": "预览行数",
+            "description": "通过 POP3 TOP 命令读取的正文预览行数。"
+          },
+          "AGUI_MAIL_PASSWORD": {
+            "title": "邮箱应用密码",
+            "description": "用于 POP3/SMTP 登录的应用密码或授权码。"
+          }
+        }
+      },
+      "contributions": {
+        "agui.mail.root": {
+          "title": "邮箱"
+        },
+        "agui.mail.panel": {
+          "title": "邮箱"
+        },
+        "agui.mail.panel.view": {
+          "name": "账号"
+        }
+      }
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.ui.json && node scripts/build-ui.js && tsc -p tsconfig.json && node scripts/finalize-build.js"
+  },
+  "files": [
+    "dist/**",
+    "mcp.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "agui": "^0.2.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:agui.mail.sessionTree",
+    "onCommand:agui.mail.messages",
+    "onCommand:agui.mail.authStatus",
+    "onCommand:agui.mail.testConnection",
+    "onCommand:agui.mail.sendMessage",
+    "onCommand:agui.mail.panelData",
+    "onConfiguration:agui.mail.configuration",
+    "onView:agui.mail.panel.view",
+    "onChatRenderer:agui.mail.messageRenderer"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "permissions": [
+    "ui.sessionTree",
+    "ui.detailPanel",
+    "ui.chatRenderer",
+    "ui.webComponent.trusted",
+    "agent.mcp",
+    "agent.sessionContext",
+    "network",
+    "secrets",
+    "process.spawn",
+    "commands"
+  ],
+  "contributes": {
+    "chatRenderers": [
+      {
+        "id": "agui.mail.messageRenderer",
+        "renderer": "agui.mail.message",
+        "renderMode": "web-component",
+        "entry": "dist/item-renderer.html",
+        "priority": 160
+      }
+    ],
+    "commands": [
+      {
+        "id": "agui.mail.sessionTree",
+        "title": "Build Mail session tree",
+        "category": "Mail",
+        "hidden": true
+      },
+      {
+        "id": "agui.mail.messages",
+        "title": "Load Mail messages",
+        "category": "Mail",
+        "hidden": true
+      },
+      {
+        "id": "agui.mail.authStatus",
+        "title": "Mail authentication status",
+        "category": "Mail",
+        "hidden": true
+      },
+      {
+        "id": "agui.mail.testConnection",
+        "title": "Test Mail connection",
+        "category": "Mail",
+        "hidden": true
+      },
+      {
+        "id": "agui.mail.sendMessage",
+        "title": "Send Mail message",
+        "category": "Mail",
+        "hidden": true
+      },
+      {
+        "id": "agui.mail.panelData",
+        "title": "Load Mail panel data",
+        "category": "Mail",
+        "hidden": true
+      }
+    ],
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "agui.mail.panel",
+          "title": "Mail",
+          "icon": "mail",
+          "order": 30
+        }
+      ]
+    },
+    "views": {
+      "agui.mail.panel": [
+        {
+          "id": "agui.mail.panel.view",
+          "name": "Account",
+          "viewType": "web-component",
+          "entry": "dist/panel.html"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Mail settings",
+      "view": {
+        "id": "agui.mail.configuration",
+        "name": "Mail configuration",
+        "viewType": "web-component",
+        "entry": "dist/configuration.html"
+      },
+      "properties": {
+        "agui.mail.account": {
+          "type": "object",
+          "title": "Mail account",
+          "default": {},
+          "restricted": true,
+          "description": "Email address, POP3/SMTP hosts, ports, and security settings."
+        },
+        "agui.mail.messagesPerPage": {
+          "type": "number",
+          "title": "Messages per page",
+          "default": 20,
+          "restricted": true,
+          "description": "Number of messages to load each time the Inbox node expands."
+        },
+        "agui.mail.previewLines": {
+          "type": "number",
+          "title": "Preview lines",
+          "default": 20,
+          "restricted": true,
+          "description": "Number of body lines to read with the POP3 TOP command."
+        },
+        "AGUI_MAIL_PASSWORD": {
+          "type": "string",
+          "title": "Mail app password",
+          "secret": true,
+          "restricted": true,
+          "description": "App password or authorization code used for POP3/SMTP login."
+        }
+      }
+    },
+    "sessionTree": [
+      {
+        "id": "agui.mail.root",
+        "title": "Mail",
+        "icon": "mail",
+        "order": 10,
+        "command": "agui.mail.sessionTree",
+        "children": []
+      }
+    ],
+    "mcpServers": "./mcp.json"
+  }
+}

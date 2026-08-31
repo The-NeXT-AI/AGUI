@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "github": {
+      "name": "GitHub Issues and Pull Requests",
+      "type": "stdio",
+      "command": "./dist/mcp-server.js",
+      "env": {
+        "AGUI_GITHUB_TOKEN": "${secret:AGUI_GITHUB_TOKEN}"
+      }
+    }
+  }
+}

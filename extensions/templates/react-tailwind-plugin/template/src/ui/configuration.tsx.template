@@ -1,0 +1,65 @@
+import "./styles.css";
+
+import { useEffect, useState } from "react";
+import { Save } from "lucide-react";
+import { aguiCommand, recordValue, useAguiData } from "./common";
+import { mount } from "./mount";
+
+const ENABLED_KEY = "__NAMESPACE__.enabled";
+
+function Configuration() {
+  const data = useAguiData();
+  const [enabled, setEnabled] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const values = recordValue(recordValue(data).values);
+    if (typeof values[ENABLED_KEY] === "boolean") setEnabled(values[ENABLED_KEY]);
+  }, [data]);
+
+  async function save() {
+    setBusy(true);
+    setMessage("");
+    try {
+      await aguiCommand("agui.configuration.update", [{ [ENABLED_KEY]: enabled }]);
+      await aguiCommand("agui.extensions.refresh");
+      setMessage("Saved.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div>
+        <div className="font-semibold text-[var(--agui-fg)]">__DISPLAY_NAME__ settings</div>
+        <div className="mt-1 text-[var(--agui-muted)]">
+          This configuration surface is a React web component.
+        </div>
+      </div>
+
+      <label className="flex items-center gap-2 text-[var(--agui-muted)]">
+        <input type="checkbox" checked={enabled} onChange={(event) => setEnabled(event.target.checked)} />
+        <span>Show sample sessions</span>
+      </label>
+
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          className="inline-flex min-h-8 items-center gap-1.5 rounded-[7px] border border-[var(--agui-accent)] bg-[var(--agui-accent)] px-2.5 font-semibold text-black disabled:opacity-55"
+          disabled={busy}
+          onClick={() => void save()}
+        >
+          <Save className="size-3.5" aria-hidden="true" />
+          Save
+        </button>
+        {message ? <span className="text-[var(--agui-muted)]">{message}</span> : null}
+      </div>
+    </div>
+  );
+}
+
+mount(<Configuration />);
