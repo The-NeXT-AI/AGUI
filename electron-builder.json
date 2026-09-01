@@ -9,7 +9,7 @@
   "publish": [
     {
       "provider": "github",
-      "owner": "musistudio",
+      "owner": "The-NeXT-AI",
       "repo": "AGUI",
       "releaseType": "draft"
     }
