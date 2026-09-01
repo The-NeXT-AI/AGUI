@@ -20,7 +20,7 @@ import {
   type ReactNode,
   type WheelEvent as ReactWheelEvent,
 } from "react";
-import { useShellStore, useSidebarPanels } from "@agui/app";
+import { useShellStore, useSidebarPanels } from "@the-next-ai/app";
 import { useUIStore } from "@/ui/ui-store";
 import { useAuthStore } from "@/ui/auth-store";
 import { useAspStore } from "@/asp/asp-store";

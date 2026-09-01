@@ -27,8 +27,8 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
-import type { ExtensionIconContribution } from "@agui/extensions";
-import type { IconType } from "@agui/app";
+import type { ExtensionIconContribution } from "@the-next-ai/extensions";
+import type { IconType } from "@the-next-ai/app";
 import { productConfig } from "@/product/product-config";
 import { readExtensionAsset } from "./extension-store";
 

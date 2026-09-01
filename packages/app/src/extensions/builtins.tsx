@@ -16,8 +16,8 @@ import {
   TestTube2,
   Zap,
 } from "lucide-react";
-import type { Extension } from "@agui/app";
-import { useShellStore } from "@agui/app";
+import type { Extension } from "@the-next-ai/app";
+import { useShellStore } from "@the-next-ai/app";
 import { useChatStore } from "@/chat/chat-store";
 import { selectAgentHandoff } from "@/chat/agent-handoff";
 import {

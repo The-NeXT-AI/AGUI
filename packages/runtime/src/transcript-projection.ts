@@ -5,7 +5,7 @@ import type {
   AspProviderSession,
   AspTokenUsage,
   AspToolEvent,
-} from "@agui/asp/types";
+} from "@the-next-ai/asp/types";
 
 type ToolStatus = "running" | "success" | "error";
 

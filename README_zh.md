@@ -23,7 +23,7 @@ Desktop 将不同 Agent runtime 的能力收束成统一产品体验。
 - **一个工作区接入多种 Agent**：通过 ASP 承载会话，在一致体验中切换 provider。
 - **人工控制内置于流程**：命令、文件和网络审批都回到同一个对话界面。
 - **桌面能力与 Web 部署兼具**：可作为 Electron 桌面应用运行，也可通过
-  `@agui/server` 部署纯 Web runtime。
+  `@the-next-ai/server` 部署纯 Web runtime。
 - **自动化紧贴聊天上下文**：把浏览器、终端和 IDE 面板能力安全提供给 Agent。
 - **为扩展和品牌化准备**：支持面板、自定义聊天组件、主题、命令、MCP Server 和
   Skill。
@@ -103,7 +103,7 @@ pnpm docs:preview
 
 ## 认证
 
-`@agui/server` 提供 WebAuth、OAuth/OIDC、共享 token 和 disabled-auth 模式，覆盖不同
+`@the-next-ai/server` 提供 WebAuth、OAuth/OIDC、共享 token 和 disabled-auth 模式，覆盖不同
 部署形态。
 
 | 模式       | 适用场景                   |
@@ -152,12 +152,12 @@ AG_UI_OAUTH_CLIENT_SECRET=...
 
 常用包入口：
 
-- `@agui/app`：前端扩展 UI API 和 contribution registry
-- `@agui/asp`：`./manager`、`./protocol`、`./transport`、`./provider-store` 和
+- `@the-next-ai/app`：前端扩展 UI API 和 contribution registry
+- `@the-next-ai/asp`：`./manager`、`./protocol`、`./transport`、`./provider-store` 和
   `./types`
-- `@agui/runtime`：provider 管理、会话、终端、IDE 文件、MCP Gateway 和 JSON-RPC 的共享
+- `@the-next-ai/runtime`：provider 管理、会话、终端、IDE 文件、MCP Gateway 和 JSON-RPC 的共享
   runtime
-- `@agui/server`：可部署的纯 Web runtime 入口
+- `@the-next-ai/server`：可部署的纯 Web runtime 入口
 
 ## 验证
 
@@ -182,7 +182,7 @@ pnpm pack:electron
 发布产物写入 `release/`：
 
 - `release/frontend/`：前端静态资源
-- `release/server/`：包含静态资源的可部署 `@agui/server` bundle
+- `release/server/`：包含静态资源的可部署 `@the-next-ai/server` bundle
 - `release/electron/`：macOS DMG/ZIP、Windows NSIS、Linux AppImage 等平台安装包
 
 发布 npm 包并上传当前平台 Electron 安装包到 GitHub Release：

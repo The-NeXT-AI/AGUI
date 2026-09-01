@@ -10,9 +10,9 @@ import {
   connectAspTransport,
   disposePersistentTransports,
   processEnvironment,
-} from "@agui/asp/transport";
-import { AspManager } from "@agui/asp/manager";
-import { ProviderStore } from "@agui/asp/provider-store";
+} from "@the-next-ai/asp/transport";
+import { AspManager } from "@the-next-ai/asp/manager";
+import { ProviderStore } from "@the-next-ai/asp/provider-store";
 import {
   assertAspClientMessage,
   assertAspClientServiceRequest,
@@ -23,7 +23,7 @@ import {
   assertAspRpcResponse,
   assertJsonSchemaValue,
   aspV1JsonSchema,
-} from "@agui/asp";
+} from "@the-next-ai/asp";
 import {
   browserMcpProviderId,
   createBrowserMcpToolProvider,
@@ -35,7 +35,7 @@ import {
   mcpGatewayScopeArgumentName,
   mcpGatewayStdioBridgeServer,
   parseRuntimeMethodParams,
-} from "@agui/runtime";
+} from "@the-next-ai/runtime";
 import {
   abortMessage,
   extensionInvokeMessage,
@@ -49,7 +49,7 @@ import {
   rpcErrorMessage,
   rpcQuestionResult,
   runMessage,
-} from "@agui/asp/protocol";
+} from "@the-next-ai/asp/protocol";
 import { runNativeAdapterSmoke, transportResponse } from "./asp-smoke-native.mjs";
 
 const directory = path.dirname(fileURLToPath(import.meta.url));

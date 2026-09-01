@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { connectAspTransport } from "@agui/asp/transport";
+import { connectAspTransport } from "@the-next-ai/asp/transport";
 import {
   extensionInvokeMessage,
   initializeMessage,
@@ -7,7 +7,7 @@ import {
   rpcApprovalResult,
   rpcQuestionResult,
   runMessage,
-} from "@agui/asp/protocol";
+} from "@the-next-ai/asp/protocol";
 
 export async function runNativeAdapterSmoke({
   id,

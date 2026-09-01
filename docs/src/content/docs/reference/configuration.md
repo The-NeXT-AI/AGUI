@@ -20,7 +20,7 @@ Unless noted, every server-side variable below also accepts an `AGUI_`-prefixed 
 
 ## Auth modes
 
-`@agui/server` enables WebAuth by default; the runtime library's own fallback is `token`. Local development with `pnpm dev:pure-web` sets `AG_UI_AUTH_MODE=disabled` unless the variable is already preset.
+`@the-next-ai/server` enables WebAuth by default; the runtime library's own fallback is `token`. Local development with `pnpm dev:pure-web` sets `AG_UI_AUTH_MODE=disabled` unless the variable is already preset.
 
 | Mode       | Use case                                                       |
 | ---------- | -------------------------------------------------------------- |

@@ -7,7 +7,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
 import { setTimeout as delay } from "node:timers/promises";
-import type { RuntimeClient, RuntimeMethodHandler } from "@agui/runtime";
+import type { RuntimeClient, RuntimeMethodHandler } from "@the-next-ai/runtime";
 import WebSocket, { type RawData } from "ws";
 
 type BrowserTarget = {

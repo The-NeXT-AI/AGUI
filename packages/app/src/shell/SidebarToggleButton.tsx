@@ -1,4 +1,4 @@
-import { useShellStore } from "@agui/app";
+import { useShellStore } from "@the-next-ai/app";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import type { CSSProperties } from "react";
 import { cn } from "@/ui/cn";

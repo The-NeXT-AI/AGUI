@@ -16,7 +16,7 @@ import type {
   QuestionRequestPayload,
   RunInput,
   RunResult,
-} from "@agui/asp/types";
+} from "@the-next-ai/asp/types";
 import type {
   AppExtensionRecord,
   ExtensionAuditListInput,
@@ -40,7 +40,7 @@ import type {
   ExtensionWorkspaceTrustInput,
   ResolveAgentContributionsInput,
   ResolvedAgentContributions,
-} from "@agui/extensions";
+} from "@the-next-ai/extensions";
 import { t } from "@/lib/i18n";
 import { alertDialog } from "@/ui/confirm-dialog";
 
@@ -84,7 +84,7 @@ export type {
   ResolvedExtensionPrompt,
   ResolvedExtensionSkill,
   ResolveAgentContributionsInput,
-} from "@agui/extensions";
+} from "@the-next-ai/extensions";
 
 export type {
   ApprovalRequestPayload,
@@ -130,7 +130,7 @@ export type {
   QuestionRequestPayload,
   RunInput,
   RunResult,
-} from "@agui/asp/types";
+} from "@the-next-ai/asp/types";
 
 export type TerminalRunEvent =
   | { id: string; type: "ready" }

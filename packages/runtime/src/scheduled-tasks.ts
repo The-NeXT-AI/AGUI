@@ -1,14 +1,14 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { AspEventSender } from "@agui/asp/manager";
+import type { AspEventSender } from "@the-next-ai/asp/manager";
 import type {
   ApprovalMode,
   AspReasoningEffort,
   AspRunSpeed,
   RunInput,
   RunResult,
-} from "@agui/asp/types";
+} from "@the-next-ai/asp/types";
 import type { AppStorage } from "./storage/index.js";
 
 export type ScheduledTaskFrequency = "once" | "daily" | "weekly" | "interval";

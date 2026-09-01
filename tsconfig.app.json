@@ -24,8 +24,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./packages/app/src/*"],
-      "@agui/app": ["./packages/app/src/runtime/index.ts"],
-      "@agui/extensions": ["./packages/extensions/src/index.ts"]
+      "@the-next-ai/app": ["./packages/app/src/runtime/index.ts"],
+      "@the-next-ai/extensions": ["./packages/extensions/src/index.ts"]
     }
   },
   "include": ["packages/app/src"]

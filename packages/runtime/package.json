@@ -1,5 +1,5 @@
 {
-  "name": "@agui/runtime",
+  "name": "@the-next-ai/runtime",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -28,8 +28,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@agui/extensions": "workspace:*",
-    "@agui/asp": "workspace:*",
+    "@the-next-ai/extensions": "workspace:*",
+    "@the-next-ai/asp": "workspace:*",
     "node-pty": "^1.1.0",
     "openai": "^7.4.0",
     "pg": "^8.23.0",

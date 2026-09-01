@@ -11,7 +11,7 @@ import {
   type AppExtensionSource,
   type ExtensionAuditRecord,
   type ExtensionConfigurationProperty,
-} from "@agui/extensions";
+} from "@the-next-ai/extensions";
 export type PersistedExtensionState = {
   auditLog: ExtensionAuditRecord[];
   enabled: Record<string, boolean>;

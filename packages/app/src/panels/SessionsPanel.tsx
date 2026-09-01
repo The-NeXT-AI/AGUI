@@ -21,7 +21,7 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { useSessionTreeRoots, type SessionTreeNode, type SessionTreeRoot } from "@agui/app";
+import { useSessionTreeRoots, type SessionTreeNode, type SessionTreeRoot } from "@the-next-ai/app";
 import {
   agentSessionDeleteKey,
   agentSessionIsProviderBacked,

@@ -5,7 +5,7 @@ import {
   type DetailPanel as DetailPanelContribution,
   type DetailPanelInstance,
   type IconType,
-} from "@agui/app";
+} from "@the-next-ai/app";
 import { Plus, X } from "lucide-react";
 import { cn } from "@/ui/cn";
 import {

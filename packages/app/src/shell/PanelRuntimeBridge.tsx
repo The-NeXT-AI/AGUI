@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useDetailPanels, useRegistryStore, useShellStore } from "@agui/app";
+import { useDetailPanels, useRegistryStore, useShellStore } from "@the-next-ai/app";
 import {
   desktopApi,
   type DetailPanelRuntimeCommand,

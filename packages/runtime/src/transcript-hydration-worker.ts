@@ -1,6 +1,6 @@
 import { parentPort, workerData } from "node:worker_threads";
-import { AspManager } from "@agui/asp/manager";
-import type { AspProvider } from "@agui/asp/types";
+import { AspManager } from "@the-next-ai/asp/manager";
+import type { AspProvider } from "@the-next-ai/asp/types";
 import { projectTranscriptSession } from "./transcript-projection.js";
 
 type TranscriptHydrationWorkerInput = {

@@ -7,7 +7,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { Worker } from "node:worker_threads";
 import { WebSocketServer, type RawData, type WebSocket } from "ws";
-import { AspManager, type AspEventSender } from "@agui/asp/manager";
+import { AspManager, type AspEventSender } from "@the-next-ai/asp/manager";
 import type {
   AspApprovalDecision,
   AspExtensionInvokeInput,
@@ -18,7 +18,7 @@ import type {
   QuestionRequestPayload,
   RunInput,
   RunResult,
-} from "@agui/asp/types";
+} from "@the-next-ai/asp/types";
 import {
   createMcpGatewayStdioSocketServer,
   BrowserWorkflowStore,

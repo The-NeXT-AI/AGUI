@@ -35,7 +35,7 @@ function restoreNodeNativeModules() {
   const args = [];
   const storeDir = installedStoreDirectory();
   if (storeDir) args.push("--store-dir", storeDir);
-  args.push("--filter", "@agui/runtime", "rebuild", ...nativePackages);
+  args.push("--filter", "@the-next-ai/runtime", "rebuild", ...nativePackages);
   console.log("Restoring native modules for the local Node runtime...");
   return run(packageManager, args);
 }

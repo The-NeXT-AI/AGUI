@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useHeaderControls, useShellStore } from "@agui/app";
+import { useHeaderControls, useShellStore } from "@the-next-ai/app";
 import {
   Archive,
   CalendarClock,

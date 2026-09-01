@@ -20,7 +20,7 @@ description: AGUI 使用的环境变量与运行时设置。
 
 ## 认证模式
 
-`@agui/server` 默认启用 WebAuth；runtime 库自身的 fallback 是 `token`。使用 `pnpm dev:pure-web` 进行本地开发时，若未预设变量会设置 `AG_UI_AUTH_MODE=disabled`。
+`@the-next-ai/server` 默认启用 WebAuth；runtime 库自身的 fallback 是 `token`。使用 `pnpm dev:pure-web` 进行本地开发时，若未预设变量会设置 `AG_UI_AUTH_MODE=disabled`。
 
 | 模式       | 适用场景                             |
 | ---------- | ------------------------------------ |

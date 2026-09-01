@@ -15,7 +15,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { useCommands, useComposerControls } from "@agui/app";
+import { useCommands, useComposerControls } from "@the-next-ai/app";
 import { useChatStore } from "@/chat/chat-store";
 import { contextUsageForSession } from "@/chat/context-usage";
 import { useUIStore, type BrowserAnnotationsDraft } from "@/ui/ui-store";

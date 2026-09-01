@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ExtensionHost, useShellStore } from "@agui/app";
+import { ExtensionHost, useShellStore } from "@the-next-ai/app";
 import { AppShell } from "@/shell/AppShell";
 import { CommandPalette } from "@/command/CommandPalette";
 import { SearchChatsDialog } from "@/shell/SearchChatsDialog";

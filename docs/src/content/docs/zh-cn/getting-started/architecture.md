@@ -10,8 +10,8 @@ AGUI 的 renderer contract 很窄，背后的 runtime 更丰富。Runtime 负责
 ```text
 AGUI Renderer
   -> secure IPC 或 WebSocket JSON-RPC
-  -> @agui/runtime
-  -> @agui/asp AspManager
+  -> @the-next-ai/runtime
+  -> @the-next-ai/asp AspManager
   -> provider adapter 或 generic ASP transport
   -> normalized ASP events
   -> chat、plan、tool、diff、artifact、resource、approval、question、usage
@@ -42,7 +42,7 @@ Renderer 从不直接对接 provider 私有 API。它向 runtime 发送高层会
 
 ## Web 模式
 
-`@agui/server` 在 Node 中运行共享 runtime，并通过 WebSocket 暴露 JSON-RPC。桌面专属能力不可用时会降级：原生目录选择、`WebContentsView` 浏览器嵌入、浏览器自动化、扩展安装体验和系统安全存储。
+`@the-next-ai/server` 在 Node 中运行共享 runtime，并通过 WebSocket 暴露 JSON-RPC。桌面专属能力不可用时会降级：原生目录选择、`WebContentsView` 浏览器嵌入、浏览器自动化、扩展安装体验和系统安全存储。
 
 ## 继续阅读
 

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 // ⌘K is bound globally by the KeyBindings engine (commandPalette.open command).
 import { Search, SquareTerminal, X } from "lucide-react";
-import { useCommands, useRegistryStore } from "@agui/app";
+import { useCommands, useRegistryStore } from "@the-next-ai/app";
 import { useUIStore } from "@/ui/ui-store";
 import { cn } from "@/ui/cn";
 import { useT } from "@/lib/i18n";

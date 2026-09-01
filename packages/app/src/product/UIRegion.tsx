@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useRegistryStore } from "@agui/app";
+import { useRegistryStore } from "@the-next-ai/app";
 import { DeclarativeExtensionView } from "@/extensions/DeclarativeExtensionView";
 import { ExtensionWebComponent } from "@/extensions/ExtensionWebComponent";
 import { cn } from "@/ui/cn";

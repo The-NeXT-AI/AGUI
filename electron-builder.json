@@ -25,8 +25,8 @@
     "NOTICE.md",
     "README.md",
     "package.json",
-    "node_modules/@agui/asp/**/*",
-    "node_modules/@agui/extensions/**/*",
+    "node_modules/@the-next-ai/asp/**/*",
+    "node_modules/@the-next-ai/extensions/**/*",
     "node_modules/ws/**/*"
   ],
   "mac": {

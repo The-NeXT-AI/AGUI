@@ -10,8 +10,8 @@ AGUI has a narrow renderer contract and a richer runtime behind it. The runtime 
 ```text
 AGUI Renderer
   -> secure IPC or WebSocket JSON-RPC
-  -> @agui/runtime
-  -> @agui/asp AspManager
+  -> @the-next-ai/runtime
+  -> @the-next-ai/asp AspManager
   -> provider adapter or generic ASP transport
   -> normalized ASP events
   -> chat, plan, tool, diff, artifact, resource, approval, question, usage
@@ -42,7 +42,7 @@ Each provider track stores its own `providerSessionId`, capabilities, context us
 
 ## Web mode
 
-`@agui/server` runs the shared runtime in Node and exposes JSON-RPC over WebSocket. Desktop-only features degrade when unavailable: native folder dialogs, `WebContentsView` browser embedding, browser automation, extension installation UX, and OS secure storage.
+`@the-next-ai/server` runs the shared runtime in Node and exposes JSON-RPC over WebSocket. Desktop-only features degrade when unavailable: native folder dialogs, `WebContentsView` browser embedding, browser automation, extension installation UX, and OS secure storage.
 
 ## Continue
 

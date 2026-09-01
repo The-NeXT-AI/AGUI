@@ -11,7 +11,7 @@ export default defineConfig({
     alias: {
       // Workspace alias so the "built-in extension" packages can be imported
       // the same way downstream extensions will.
-      "@agui/app": path.resolve(process.cwd(), "packages/app/src/runtime/index.ts"),
+      "@the-next-ai/app": path.resolve(process.cwd(), "packages/app/src/runtime/index.ts"),
       "@": path.resolve(process.cwd(), "packages/app/src"),
     },
   },

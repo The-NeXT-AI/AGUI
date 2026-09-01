@@ -2,7 +2,7 @@ import path from "node:path";
 import { serialize } from "node:v8";
 import { fileURLToPath } from "node:url";
 import { utilityProcess, type UtilityProcess } from "electron";
-import type { AppExtensionPermission } from "@agui/extensions";
+import type { AppExtensionPermission } from "@the-next-ai/extensions";
 
 const HOST_REQUEST_TIMEOUT_MS = 10_000;
 const HOST_COMMAND_TIMEOUT_MS = 60_000;

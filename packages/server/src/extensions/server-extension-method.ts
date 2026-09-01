@@ -3,8 +3,8 @@ import type {
   ExtensionAuditListInput,
   ExtensionMarketplaceListInput,
   ExtensionRuntimeEvent,
-} from "@agui/extensions";
-import type { RuntimeMethodHandler } from "@agui/runtime";
+} from "@the-next-ai/extensions";
+import type { RuntimeMethodHandler } from "@the-next-ai/runtime";
 import { ServerExtensionService } from "./server-extension-service.js";
 
 export function createServerExtensionRuntime(options: {

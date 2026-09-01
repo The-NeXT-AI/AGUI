@@ -32,7 +32,7 @@
     "build:mail-extension": "pnpm --dir extensions/mail build",
     "build:frontend": "tsc -b && vite build",
     "build:electron": "tsc -b tsconfig.electron.json",
-    "build:server": "pnpm --filter @agui/server build",
+    "build:server": "pnpm --filter @the-next-ai/server build",
     "build:app": "pnpm build:frontend && pnpm build:electron",
     "pack:frontend": "pnpm build:frontend && node scripts/package-frontend.mjs",
     "pack:server": "pnpm build:frontend && pnpm build:server && node scripts/package-server.mjs",
@@ -48,9 +48,9 @@
     "server": "pnpm build && node packages/server/dist/index.js",
     "preview": "vite preview",
     "postinstall": "node scripts/fix-node-pty-spawn-helper.mjs && node scripts/ensure-electron-binary.mjs",
-    "typecheck": "pnpm --filter @agui/extensions typecheck && pnpm --filter @agui/asp typecheck && pnpm --filter @agui/runtime typecheck && pnpm --filter @agui/app typecheck && pnpm --filter @agui/server typecheck && tsc -b --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "typecheck": "pnpm --filter @the-next-ai/extensions typecheck && pnpm --filter @the-next-ai/asp typecheck && pnpm --filter @the-next-ai/runtime typecheck && pnpm --filter @the-next-ai/app typecheck && pnpm --filter @the-next-ai/server typecheck && tsc -b --noEmit && tsc -p tsconfig.electron.json --noEmit",
     "test:asp": "pnpm build:electron && node scripts/asp-smoke.mjs",
-    "schema:asp": "pnpm --filter @agui/asp build && node scripts/generate-asp-schema.mjs",
+    "schema:asp": "pnpm --filter @the-next-ai/asp build && node scripts/generate-asp-schema.mjs",
     "security:audit": "pnpm audit --audit-level moderate",
     "test:ci": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:unit && pnpm test:asp && pnpm docs:build && pnpm security:audit",
     "test:multi-agent": "node --experimental-strip-types scripts/multi-agent-session-tests.mjs",
@@ -65,12 +65,12 @@
     "dist": "pnpm pack:electron"
   },
   "dependencies": {
-    "@agui/asp": "workspace:*",
-    "@agui/extensions": "workspace:*",
-    "@agui/runtime": "workspace:*"
+    "@the-next-ai/asp": "workspace:*",
+    "@the-next-ai/extensions": "workspace:*",
+    "@the-next-ai/runtime": "workspace:*"
   },
   "devDependencies": {
-    "@agui/app": "workspace:*",
+    "@the-next-ai/app": "workspace:*",
     "@base-ui/react": "^1.6.0",
     "@eslint/js": "^10.0.1",
     "@musistudio/lucide-morph-react": "^1.0.1",
@@ -138,9 +138,6 @@
       "fast-uri": "3.1.5",
       "js-yaml": "4.3.1",
       "postcss": "8.5.26"
-    },
-    "patchedDependencies": {
-      "tree-sitter@0.21.1": "patches/tree-sitter@0.21.1.patch"
     }
   }
 }

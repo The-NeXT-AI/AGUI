@@ -1,5 +1,5 @@
 /**
- * `@agui/app` — the public surface downstream extensions code against.
+ * `@the-next-ai/app` — the public surface downstream extensions code against.
  */
 export type {
   AspRunProjector,

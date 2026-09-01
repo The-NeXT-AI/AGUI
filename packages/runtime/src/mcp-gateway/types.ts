@@ -1,4 +1,4 @@
-import type { AspQuestionResponse, QuestionRequestPayload } from "@agui/asp/types";
+import type { AspQuestionResponse, QuestionRequestPayload } from "@the-next-ai/asp/types";
 
 export type McpGatewayTransport = "http" | "sse" | "stdio";
 

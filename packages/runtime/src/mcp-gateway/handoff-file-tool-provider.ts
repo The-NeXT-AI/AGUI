@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { AspConversationFile, RunInput } from "@agui/asp/types";
+import type { AspConversationFile, RunInput } from "@the-next-ai/asp/types";
 import type { McpGatewayToolDefinition, McpGatewayToolProvider } from "./types.js";
 
 export const handoffFileMcpProviderId = "agui_handoff_files";
