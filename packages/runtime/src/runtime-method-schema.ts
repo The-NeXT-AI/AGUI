@@ -1,4 +1,4 @@
-import { APP_EXTENSION_PERMISSIONS } from "@the-next-ai/extensions";
+import { APP_EXTENSION_PERMISSIONS } from "@the-next-ai/agui-extensions";
 import { z } from "zod";
 
 const id = z

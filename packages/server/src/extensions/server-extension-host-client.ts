@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { serialize } from "node:v8";
-import type { AppExtensionPermission } from "@the-next-ai/extensions";
+import type { AppExtensionPermission } from "@the-next-ai/agui-extensions";
 
 const HOST_REQUEST_TIMEOUT_MS = 10_000;
 const HOST_COMMAND_TIMEOUT_MS = 60_000;

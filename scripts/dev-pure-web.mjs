@@ -71,7 +71,7 @@ function waitForPort(port, timeoutMs = 30_000) {
 process.on("SIGINT", () => stop());
 process.on("SIGTERM", () => stop());
 
-await runOnce(packageManager, ["--filter", "@the-next-ai/server", "build"]);
+await runOnce(packageManager, ["--filter", "@the-next-ai/agui-server", "build"]);
 run(packageManager, [
   "exec",
   "tsc",

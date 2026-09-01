@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRegistryStore } from "@the-next-ai/app";
+import { useRegistryStore } from "@the-next-ai/agui-app";
 
 /**
  * Global keybinding engine. Every registered command with a `keybinding` is

@@ -17,10 +17,10 @@ importers:
       '@the-next-ai/asp':
         specifier: workspace:*
         version: link:packages/asp
-      '@the-next-ai/extensions':
+      '@the-next-ai/agui-extensions':
         specifier: workspace:*
         version: link:packages/extensions
-      '@the-next-ai/runtime':
+      '@the-next-ai/agui-runtime':
         specifier: workspace:*
         version: link:packages/runtime
     devDependencies:
@@ -39,7 +39,7 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.0.0
         version: 4.3.3(vite@6.4.3(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(yaml@2.9.0))
-      '@the-next-ai/app':
+      '@the-next-ai/agui-app':
         specifier: workspace:*
         version: link:packages/app
       '@types/katex':
@@ -258,7 +258,7 @@ importers:
       '@the-next-ai/asp':
         specifier: workspace:*
         version: link:../asp
-      '@the-next-ai/extensions':
+      '@the-next-ai/agui-extensions':
         specifier: workspace:*
         version: link:../extensions
       node-pty:
@@ -301,10 +301,10 @@ importers:
 
   packages/server:
     dependencies:
-      '@the-next-ai/extensions':
+      '@the-next-ai/agui-extensions':
         specifier: workspace:*
         version: link:../extensions
-      '@the-next-ai/runtime':
+      '@the-next-ai/agui-runtime':
         specifier: workspace:*
         version: link:../runtime
       ws:

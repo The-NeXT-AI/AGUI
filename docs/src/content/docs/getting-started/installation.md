@@ -41,7 +41,7 @@ For the renderer plus the Node JSON-RPC backend:
 pnpm dev:pure-web
 ```
 
-`dev:pure-web` starts Vite and `@the-next-ai/server`, then connects the frontend to `/agui-rpc` over WebSocket.
+`dev:pure-web` starts Vite and `@the-next-ai/agui-server`, then connects the frontend to `/agui-rpc` over WebSocket.
 
 ## Build a distribution
 
@@ -53,7 +53,7 @@ pnpm pack:server
 pnpm pack:electron
 ```
 
-`pack:server` bundles the deployable `@the-next-ai/server` directory together with the built frontend; `pack:electron` produces macOS DMG/ZIP, Windows NSIS, and Linux AppImage artifacts under `release/electron/`. Or run a plain production build:
+`pack:server` bundles the deployable `@the-next-ai/agui-server` directory together with the built frontend; `pack:electron` produces macOS DMG/ZIP, Windows NSIS, and Linux AppImage artifacts under `release/electron/`. Or run a plain production build:
 
 ```bash
 pnpm build:app

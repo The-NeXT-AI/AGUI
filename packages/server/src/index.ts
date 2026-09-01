@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import process from "node:process";
-import { NodeRuntimeServer, configuredRuntimeAuthOptions } from "@the-next-ai/runtime";
+import { NodeRuntimeServer, configuredRuntimeAuthOptions } from "@the-next-ai/agui-runtime";
 import { createServerExtensionRuntime } from "./extensions/server-extension-method.js";
 import {
   createChromeBrowserService,

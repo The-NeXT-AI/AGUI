@@ -27,7 +27,7 @@ AGUI Desktop turns agent runtime diversity into a unified product experience.
 - **Human control built in**: review command, file, and network approvals from
   the same conversation surface.
 - **Desktop power, web reach**: run as an Electron app or deploy the pure-web
-  runtime through `@the-next-ai/server`.
+  runtime through `@the-next-ai/agui-server`.
 - **Automation beside the chat**: give agents controlled browser, terminal, and
   IDE-panel capabilities through the runtime.
 - **Extension-ready from day one**: add panels, custom chat components, themes,
@@ -117,7 +117,7 @@ pnpm docs:preview
 
 ## Authentication
 
-`@the-next-ai/server` includes WebAuth, OAuth/OIDC, shared-token, and disabled-auth
+`@the-next-ai/agui-server` includes WebAuth, OAuth/OIDC, shared-token, and disabled-auth
 modes for different deployment shapes.
 
 | Mode       | Fit                                                      |
@@ -166,12 +166,12 @@ such as `{tenant}`, `{tenantId}`, `{user}`, `{userId}`, and `{emailDomain}`.
 
 Useful package entrypoints:
 
-- `@the-next-ai/app`: frontend extension UI API and contribution registry
+- `@the-next-ai/agui-app`: frontend extension UI API and contribution registry
 - `@the-next-ai/asp`: `./manager`, `./protocol`, `./transport`, `./provider-store`,
   and `./types`
-- `@the-next-ai/runtime`: shared runtime for provider management, sessions, terminals,
+- `@the-next-ai/agui-runtime`: shared runtime for provider management, sessions, terminals,
   IDE files, MCP Gateway, and JSON-RPC
-- `@the-next-ai/server`: deployable pure-web runtime entrypoint
+- `@the-next-ai/agui-server`: deployable pure-web runtime entrypoint
 
 ## Validate
 
@@ -197,7 +197,7 @@ pnpm pack:electron
 Release outputs are written under `release/`:
 
 - `release/frontend/`: static frontend assets
-- `release/server/`: deployable `@the-next-ai/server` bundle with static assets
+- `release/server/`: deployable `@the-next-ai/agui-server` bundle with static assets
 - `release/electron/`: platform installers such as macOS DMG/ZIP, Windows NSIS,
   and Linux AppImage
 

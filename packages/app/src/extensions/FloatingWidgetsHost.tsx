@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { useFloatingWidgets, type FloatingWidget, type FloatingWidgetPosition } from "@the-next-ai/app";
+import { useFloatingWidgets, type FloatingWidget, type FloatingWidgetPosition } from "@the-next-ai/agui-app";
 import { cn } from "@/ui/cn";
 
 const POSITIONS: FloatingWidgetPosition[] = [

@@ -10,7 +10,7 @@ import {
   Search,
   Square,
 } from "lucide-react";
-import { useShellStore } from "@the-next-ai/app";
+import { useShellStore } from "@the-next-ai/agui-app";
 import { desktopApi, type IdeDiagnostic, type TerminalRunEvent } from "@/asp/desktop-api";
 import { useAspStore } from "@/asp/asp-store";
 import { useChatStore } from "@/chat/chat-store";

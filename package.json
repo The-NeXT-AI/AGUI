@@ -32,7 +32,7 @@
     "build:mail-extension": "pnpm --dir extensions/mail build",
     "build:frontend": "tsc -b && vite build",
     "build:electron": "tsc -b tsconfig.electron.json",
-    "build:server": "pnpm --filter @the-next-ai/server build",
+    "build:server": "pnpm --filter @the-next-ai/agui-server build",
     "build:app": "pnpm build:frontend && pnpm build:electron",
     "pack:frontend": "pnpm build:frontend && node scripts/package-frontend.mjs",
     "pack:server": "pnpm build:frontend && pnpm build:server && node scripts/package-server.mjs",
@@ -48,7 +48,7 @@
     "server": "pnpm build && node packages/server/dist/index.js",
     "preview": "vite preview",
     "postinstall": "node scripts/fix-node-pty-spawn-helper.mjs && node scripts/ensure-electron-binary.mjs",
-    "typecheck": "pnpm --filter @the-next-ai/extensions typecheck && pnpm --filter @the-next-ai/asp typecheck && pnpm --filter @the-next-ai/runtime typecheck && pnpm --filter @the-next-ai/app typecheck && pnpm --filter @the-next-ai/server typecheck && tsc -b --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "typecheck": "pnpm --filter @the-next-ai/agui-extensions typecheck && pnpm --filter @the-next-ai/asp typecheck && pnpm --filter @the-next-ai/agui-runtime typecheck && pnpm --filter @the-next-ai/agui-app typecheck && pnpm --filter @the-next-ai/agui-server typecheck && tsc -b --noEmit && tsc -p tsconfig.electron.json --noEmit",
     "test:asp": "pnpm build:electron && node scripts/asp-smoke.mjs",
     "schema:asp": "pnpm --filter @the-next-ai/asp build && node scripts/generate-asp-schema.mjs",
     "security:audit": "pnpm audit --audit-level moderate",
@@ -66,11 +66,11 @@
   },
   "dependencies": {
     "@the-next-ai/asp": "workspace:*",
-    "@the-next-ai/extensions": "workspace:*",
-    "@the-next-ai/runtime": "workspace:*"
+    "@the-next-ai/agui-extensions": "workspace:*",
+    "@the-next-ai/agui-runtime": "workspace:*"
   },
   "devDependencies": {
-    "@the-next-ai/app": "workspace:*",
+    "@the-next-ai/agui-app": "workspace:*",
     "@base-ui/react": "^1.6.0",
     "@eslint/js": "^10.0.1",
     "@musistudio/lucide-morph-react": "^1.0.1",

@@ -19,8 +19,8 @@ import {
   type ResolvedExtensionPrompt,
   type ResolvedExtensionMcpServer,
   type ResolvedExtensionSkill,
-} from "@the-next-ai/extensions";
-import { createAppStorage, type AppStorage } from "@the-next-ai/runtime";
+} from "@the-next-ai/agui-extensions";
+import { createAppStorage, type AppStorage } from "@the-next-ai/agui-runtime";
 import { ServerExtensionHostClient } from "./server-extension-host-client.js";
 import {
   computePackageFingerprint,

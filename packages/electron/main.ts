@@ -17,7 +17,7 @@ import {
   type WebFrameMain,
 } from "electron";
 import type { AspEventSender } from "@the-next-ai/asp/manager";
-import { AguiRuntime, configuredRuntimeUserDataPath } from "@the-next-ai/runtime";
+import { AguiRuntime, configuredRuntimeUserDataPath } from "@the-next-ai/agui-runtime";
 import type {
   ExtensionActivateInput,
   ExtensionAuditListInput,
@@ -34,7 +34,7 @@ import type {
   ExtensionUpdateInput,
   ExtensionWorkspaceTrustInput,
   ResolveAgentContributionsInput,
-} from "@the-next-ai/extensions";
+} from "@the-next-ai/agui-extensions";
 import { ExtensionService } from "./extension-service.js";
 import {
   configureElectronBrowserService,

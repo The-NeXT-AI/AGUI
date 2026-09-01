@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useRegistryStore, useShellStore, type SessionTreeNode } from "@the-next-ai/app";
+import { useRegistryStore, useShellStore, type SessionTreeNode } from "@the-next-ai/agui-app";
 import { useAspStore } from "@/asp/asp-store";
 import {
   desktopApi,
@@ -15,7 +15,7 @@ import {
 import { Markdown } from "@/chat/Markdown";
 import { useChatStore } from "@/chat/chat-store";
 import { useWorkspaceStore } from "@/workspaces/workspace-store";
-import { CompositeDisposable } from "@the-next-ai/app";
+import { CompositeDisposable } from "@the-next-ai/agui-app";
 import { ExtensionView } from "./ExtensionView";
 import { ExtensionSurfaceErrorBoundary } from "./ExtensionSurfaceErrorBoundary";
 import { ExtensionViewsContainer } from "./ExtensionViewsContainer";

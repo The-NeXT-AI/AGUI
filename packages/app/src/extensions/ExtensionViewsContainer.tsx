@@ -1,6 +1,6 @@
 import { useMemo, useState, type MouseEvent } from "react";
 import { ChevronDown, MoreHorizontal } from "lucide-react";
-import { useRegistryStore } from "@the-next-ai/app";
+import { useRegistryStore } from "@the-next-ai/agui-app";
 import type {
   ExtensionMenuContribution,
   ExtensionMenusContribution,

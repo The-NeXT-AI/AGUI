@@ -40,7 +40,7 @@ import {
 import { useAspStore } from "@/asp/asp-store";
 import { uid } from "@/ui/id";
 import { useUIStore, type BrowserSnapshotDraft } from "@/ui/ui-store";
-import { useShellStore, type DetailPanelInstance } from "@the-next-ai/app";
+import { useShellStore, type DetailPanelInstance } from "@the-next-ai/agui-app";
 import { useT } from "@/lib/i18n";
 import { useDetailPanelProjectContext } from "@/shell/detail-panel-project-context";
 import { useWorkspaceStore } from "@/workspaces/workspace-store";

@@ -35,7 +35,7 @@ import {
   mcpGatewayScopeArgumentName,
   mcpGatewayStdioBridgeServer,
   parseRuntimeMethodParams,
-} from "@the-next-ai/runtime";
+} from "@the-next-ai/agui-runtime";
 import {
   abortMessage,
   extensionInvokeMessage,

@@ -40,7 +40,7 @@ import type {
   ExtensionWorkspaceTrustInput,
   ResolveAgentContributionsInput,
   ResolvedAgentContributions,
-} from "@the-next-ai/extensions";
+} from "@the-next-ai/agui-extensions";
 import { t } from "@/lib/i18n";
 import { alertDialog } from "@/ui/confirm-dialog";
 
@@ -84,7 +84,7 @@ export type {
   ResolvedExtensionPrompt,
   ResolvedExtensionSkill,
   ResolveAgentContributionsInput,
-} from "@the-next-ai/extensions";
+} from "@the-next-ai/agui-extensions";
 
 export type {
   ApprovalRequestPayload,

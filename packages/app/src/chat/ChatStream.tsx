@@ -19,8 +19,8 @@ import {
   SearchCode,
   Sparkles,
 } from "lucide-react";
-import { useBlockRenderers, useShellStore } from "@the-next-ai/app";
-import type { BlockRenderer } from "@the-next-ai/app";
+import { useBlockRenderers, useShellStore } from "@the-next-ai/agui-app";
+import type { BlockRenderer } from "@the-next-ai/agui-app";
 import { ExtensionSurfaceErrorBoundary } from "@/extensions/ExtensionSurfaceErrorBoundary";
 import { useUIStore } from "@/ui/ui-store";
 import { useI18nStore, useT } from "@/lib/i18n";

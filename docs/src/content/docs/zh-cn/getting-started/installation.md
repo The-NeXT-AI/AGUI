@@ -41,7 +41,7 @@ renderer 与 Node JSON-RPC 后端一起启动：
 pnpm dev:pure-web
 ```
 
-`dev:pure-web` 会启动 Vite 和 `@the-next-ai/server`，前端再通过 WebSocket 连接 `/agui-rpc`。
+`dev:pure-web` 会启动 Vite 和 `@the-next-ai/agui-server`，前端再通过 WebSocket 连接 `/agui-rpc`。
 
 ## 构建发行版
 
@@ -53,7 +53,7 @@ pnpm pack:server
 pnpm pack:electron
 ```
 
-`pack:server` 会把可部署的 `@the-next-ai/server` 目录和构建好的前端打包在一起；`pack:electron` 在 `release/electron/` 下产出 macOS DMG/ZIP、Windows NSIS 和 Linux AppImage。或者只做常规生产构建：
+`pack:server` 会把可部署的 `@the-next-ai/agui-server` 目录和构建好的前端打包在一起；`pack:electron` 在 `release/electron/` 下产出 macOS DMG/ZIP、Windows NSIS 和 Linux AppImage。或者只做常规生产构建：
 
 ```bash
 pnpm build:app

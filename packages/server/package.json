@@ -1,5 +1,5 @@
 {
-  "name": "@the-next-ai/server",
+  "name": "@the-next-ai/agui-server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -26,8 +26,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@the-next-ai/extensions": "workspace:*",
-    "@the-next-ai/runtime": "workspace:*",
+    "@the-next-ai/agui-extensions": "workspace:*",
+    "@the-next-ai/agui-runtime": "workspace:*",
     "ws": "^8.18.3"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useShellStore } from "@the-next-ai/app";
+import { useShellStore } from "@the-next-ai/agui-app";
 import { Sidebar } from "./Sidebar";
 import { DetailPanel } from "./DetailPanel";
 import { Header } from "./Header";
