@@ -14,15 +14,15 @@ importers:
 
   .:
     dependencies:
-      '@the-next-ai/asp':
-        specifier: workspace:*
-        version: link:packages/asp
       '@the-next-ai/agui-extensions':
         specifier: workspace:*
         version: link:packages/extensions
       '@the-next-ai/agui-runtime':
         specifier: workspace:*
         version: link:packages/runtime
+      '@the-next-ai/asp':
+        specifier: workspace:*
+        version: link:packages/asp
     devDependencies:
       '@base-ui/react':
         specifier: ^1.6.0
@@ -178,8 +178,8 @@ importers:
         specifier: ^6.0.0
         version: 6.4.3(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(yaml@2.9.0)
       wait-on:
-        specifier: ^8.0.0
-        version: 8.0.5
+        specifier: ^9.1.0
+        version: 9.1.0
       ws:
         specifier: ^8.18.3
         version: 8.21.1
@@ -255,12 +255,12 @@ importers:
 
   packages/runtime:
     dependencies:
-      '@the-next-ai/asp':
-        specifier: workspace:*
-        version: link:../asp
       '@the-next-ai/agui-extensions':
         specifier: workspace:*
         version: link:../extensions
+      '@the-next-ai/asp':
+        specifier: workspace:*
+        version: link:../asp
       node-pty:
         specifier: ^1.1.0
         version: 1.1.0
@@ -2478,8 +2478,8 @@ packages:
   aws4@1.13.2:
     resolution: {integrity: sha512-lHe62zvbTB5eEABUVi/AwVh0ZKY9rMMDhmm+eeyuuUQbQ3+J+fONVQOZyj+DdrvD4BY33uYniyRJ4UJIaSKAfw==}
 
-  axios@1.19.0:
-    resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
+  axios@1.20.0:
+    resolution: {integrity: sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -3677,8 +3677,8 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  joi@18.2.3:
-    resolution: {integrity: sha512-N5A3KTWQpPWT4ExxxPlUx7WmykGXRzhNidWhV41d6Abu9YfI2NyWCJuxdPnslJCPWtbRpSVOWSnSS6GakLM/Rg==}
+  joi@18.2.8:
+    resolution: {integrity: sha512-G2TX62h58ZHuwqetJgP2F4ualakqAmZtBYe3jWen7gxQRw5xApX6crnFtuB91WC0c3ESBnva+kGSnb3+6pIQDQ==}
     engines: {node: '>= 20'}
 
   js-tokens@4.0.0:
@@ -5591,9 +5591,9 @@ packages:
   vscode-uri@3.2.0:
     resolution: {integrity: sha512-m2gXo3bn0G1kT9InzMf07fTbqMbGtyckj3bH5ktLO+1Ssv+yiATZ4dhwaQv9UZWxJh6E9IFGnQyjgWVDWVBDrg==}
 
-  wait-on@8.0.5:
-    resolution: {integrity: sha512-J3WlS0txVHkhLRb2FsmRg3dkMTCV1+M6Xra3Ho7HzZDHpE7DCOnoSoCJsZotrmW3uRMhvIJGSKUKrh/MeF4iag==}
-    engines: {node: '>=12.0.0'}
+  wait-on@9.1.0:
+    resolution: {integrity: sha512-PymrLXHLBM1Ju/Xspb2ADUhbPSMvbnuNvy/mN2hWtpbJ3da0h3Ky1LqwKPG5QSVR57liyO0iUpfipYl/s5qNvA==}
+    engines: {node: '>=20.0.0'}
     hasBin: true
 
   web-namespaces@2.0.1:
@@ -7934,7 +7934,7 @@ snapshots:
 
   aws4@1.13.2: {}
 
-  axios@1.19.0:
+  axios@1.20.0:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
@@ -9402,7 +9402,7 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  joi@18.2.3:
+  joi@18.2.8:
     dependencies:
       '@hapi/address': 5.1.1
       '@hapi/formula': 3.0.2
@@ -11614,10 +11614,10 @@ snapshots:
 
   vscode-uri@3.2.0: {}
 
-  wait-on@8.0.5:
+  wait-on@9.1.0:
     dependencies:
-      axios: 1.19.0
-      joi: 18.2.3
+      axios: 1.20.0
+      joi: 18.2.8
       lodash: 4.18.1
       minimist: 1.2.8
       rxjs: 7.8.2
