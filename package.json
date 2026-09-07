@@ -96,7 +96,7 @@
     "highlight.js": "11.11.1",
     "i18next": "^26.3.6",
     "katex": "^0.18.1",
-    "lucide-react": "^0.469.0",
+    "lucide-react": "^1.40.0",
     "mermaid": "^11.17.2",
     "monaco-editor": "^0.56.0",
     "nanoid": "^5.0.9",
