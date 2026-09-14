@@ -28,7 +28,7 @@
   "dependencies": {
     "@the-next-ai/agui-extensions": "workspace:*",
     "@the-next-ai/agui-runtime": "workspace:*",
-    "ws": "^8.18.3"
+    "ws": "^8.21.3"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
