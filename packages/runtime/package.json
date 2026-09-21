@@ -31,14 +31,14 @@
     "@the-next-ai/agui-extensions": "workspace:*",
     "@the-next-ai/asp": "workspace:*",
     "node-pty": "^1.1.0",
-    "openai": "^7.4.0",
+    "openai": "^7.18.0",
     "pg": "^8.23.0",
     "sqlite3": "^6.0.1",
-    "tree-sitter": "0.21.1",
+    "tree-sitter": "0.25.1",
     "tree-sitter-typescript": "0.23.2",
     "typescript": "~5.7.0",
-    "ws": "^8.18.3",
-    "zod": "^4.1.5"
+    "ws": "^8.21.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
