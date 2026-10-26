@@ -18,9 +18,9 @@
     }
   },
   "dependencies": {
-    "prosemirror-model": "^1.25.11",
+    "prosemirror-model": "^1.25.12",
     "prosemirror-state": "^1.4.4",
-    "prosemirror-view": "^1.42.2"
+    "prosemirror-view": "^1.42.7"
   },
   "scripts": {
     "typecheck": "tsc -p ../../tsconfig.app.json --noEmit"
